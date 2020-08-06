@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -18,6 +18,8 @@
             <title>JSP Page</title>
         </head>
         <body>
-            <h1><h:outputText value="Hello World!"/></h1>
+            <form:form method="POST" action="${pageContext.request.contextPath}/logout">
+                <input type="submit" value="Logout"/>
+            </form:form>
         </body>
     </html>

@@ -12,10 +12,7 @@ import com.webapp.groupproject.utils.QuizFilters;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,12 +45,8 @@ public class HomeController {
             @RequestParam String answer4
     ) throws MalformedURLException, IOException {
         ObjectMapper om = new ObjectMapper();
-        List<Activity> activities = om.readValue(new File(
-                "src/main/resources/activities.json"
-        ), new TypeReference<List<Activity>>() {
-        });
-        List<Activity> filteredActivities = QuizFilters.filterActivitiesBasedOnAnswers(answer1,
-                answer2, answer3, answer4, activities);
+        List<Activity> activities = om.readValue(new File("src/main/resources/activities.json"), new TypeReference<List<Activity>>(){});
+        List<Activity> filteredActivities = QuizFilters.filterActivitiesBasedOnAnswers(answer1, answer2, answer3, answer4, activities);
         if (filteredActivities.isEmpty()) {
             return null;
         } else {

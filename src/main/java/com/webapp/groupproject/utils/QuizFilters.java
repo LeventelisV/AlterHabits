@@ -9,6 +9,7 @@ import com.webapp.groupproject.pojo.Activity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,8 @@ public class QuizFilters {
         List<Activity> activitiesSortedByAnswer2 = filterActivitiesBasedOnAnswer2(answer2, activitiesSortedByAnswer1);
         List<Activity> activitiesSortedByAnswer3 = filterActivitiesBasedOnAnswer3(answer3, activitiesSortedByAnswer2);
         List<Activity> activitiesSortedByAnswer4 = filterActivitiesBasedOnAnswer4(answer4, activitiesSortedByAnswer3);
-        return activitiesSortedByAnswer4;
+        List<Activity> activitiesSuggestedMaximum3 = keepThreeListItemsToShow(activitiesSortedByAnswer4);
+        return activitiesSuggestedMaximum3;
     }
 
     private static List<Activity> filterActivitiesBasedOnAnswer1(String answer1, List<Activity> activities) {
@@ -123,6 +125,23 @@ public class QuizFilters {
         }
         return activitiesFilteredByAnswer4;
 
+    }
+    
+    private static List<Activity> keepThreeListItemsToShow(List<Activity> activitiesSuggested) {
+        
+        Random random = new Random();
+        List<Activity> activitiesSuggestedMaximum3 = new ArrayList();
+        int numberOfActivitiesToKeep = 3;
+        for(int i = 0; i < numberOfActivitiesToKeep; i++) {
+            int randomIndex = random.nextInt(activitiesSuggested.size());
+            Activity activityRandomlyChosen = activitiesSuggested.get(randomIndex);
+            activitiesSuggestedMaximum3.add(activityRandomlyChosen);
+            activitiesSuggested.remove(randomIndex);
+            if(activitiesSuggested.size() < 1) {
+                break;
+            }
+        }
+        return activitiesSuggestedMaximum3;
     }
 
 }

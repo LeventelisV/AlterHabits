@@ -25,28 +25,39 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service
-public class MyUserServiceImplementation  implements MyUserServiceInterface {
-    
+public class MyUserServiceImplementation implements MyUserServiceInterface {
+
     @Autowired
     private MyUserRepository myUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       MyUser myUser = myUserRepository.findByUsername(username);
-       if(myUser == null) {
-           throw new UsernameNotFoundException("Invalid Username");
-       }
-       User springSecurityUser = new User(myUser.getUsername(), myUser.getUserPassword(), mapRolesToAuthorities(myUser.getRoles()));
-       return springSecurityUser;
+        MyUser myUser = myUserRepository.findByUsername(username);
+        if (myUser == null) {
+            throw new UsernameNotFoundException("Invalid Username");
+        }
+        User springSecurityUser = new User(myUser.getUsername(), myUser.getUserPassword(), mapRolesToAuthorities(myUser.getRoles()));
+        return springSecurityUser;
     }
-    
+
     private List<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList();
-        for(Role role:roles){
+        for (Role role : roles) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRole());
             authorities.add(authority);
         }
         return authorities;
     }
+
+    @Override
+    public void insertMyUser(MyUser user) {
+        myUserRepository.save(user);
+    }
+
+    @Override
+    public MyUser findByUsername(String username){
+      return   myUserRepository.findByUsername(username);
+    }
     
+
 }

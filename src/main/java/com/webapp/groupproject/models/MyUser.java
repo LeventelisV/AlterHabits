@@ -6,6 +6,7 @@
 package com.webapp.groupproject.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,8 +21,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +39,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MyUser.findByUsername", query = "SELECT m FROM MyUser m WHERE m.username = :username"),
     @NamedQuery(name = "MyUser.findByUserPassword", query = "SELECT m FROM MyUser m WHERE m.userPassword = :userPassword")})
 public class MyUser implements Serializable {
+
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+//    private Collection<UserAddressInfo> userAddressInfoCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<UserPersonalInfo> userPersonalInfoCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<UserContactInfo> userContactInfoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -125,5 +137,32 @@ public class MyUser implements Serializable {
     public String toString() {
         return "com.webapp.groupproject.models.MyUser[ userId=" + userId + " ]";
     }
+
+    @XmlTransient
+    public Collection<UserContactInfo> getUserContactInfoCollection() {
+        return userContactInfoCollection;
+    }
+
+    public void setUserContactInfoCollection(Collection<UserContactInfo> userContactInfoCollection) {
+        this.userContactInfoCollection = userContactInfoCollection;
+    }
+
+    @XmlTransient
+    public Collection<UserPersonalInfo> getUserPersonalInfoCollection() {
+        return userPersonalInfoCollection;
+    }
+
+    public void setUserPersonalInfoCollection(Collection<UserPersonalInfo> userPersonalInfoCollection) {
+        this.userPersonalInfoCollection = userPersonalInfoCollection;
+    }
+
+//    @XmlTransient
+//    public Collection<UserAddressInfo> getUserAddressInfoCollection() {
+//        return userAddressInfoCollection;
+//    }
+//
+//    public void setUserAddressInfoCollection(Collection<UserAddressInfo> userAddressInfoCollection) {
+//        this.userAddressInfoCollection = userAddressInfoCollection;
+//    }
     
 }

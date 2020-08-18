@@ -18,7 +18,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -90,7 +92,30 @@ public class RegisterUserDto {
 
     @NotEmpty(message = "This field is mandatory!")
     private String matchingPassword;
+    
+    @NotNull(message = "Choose a subscription!")
+    private String role;
+    
+    @NotEmpty(message = "Please enter your credit/debit card's number!")
+    @CreditCardNumber(message = "Enter a valid credit/debit card number!")
+    @Pattern(regexp = "^[0-9]+$", message = "Only numbers allowed on this field.")
+    private String creditDebitCardNumber;
+    
+    @NotEmpty(message = "Please enter you name as it is written on the credit/debit card!")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Enter a valid name!")
+    @Size(min = 5, max = 60, message = "This field must be between 5 and 60 letters.")
+    private String creditDebitCardName;
+    
+    @NotEmpty(message = "Please enter the expiration month of your card!")
+    @Pattern(regexp = "^(0?[1-9]|1[012])$", message = "Enter a valid two digit value (e.g. 05).")
+    private String creditDebitCardExpMonth;
+    
+    @NotEmpty(message = "Please enter the expiration year of your card!")
+    @Pattern(regexp = "^20[0-9]{2}$", message = "Enter a valid 4 digit value starting with 20__ (e.g. 2025)")
+    private String creditDebitCardExpYear;
 
+    private MultipartFile userPhoto;
+    
     public RegisterUserDto() {
     }
 
@@ -112,7 +137,8 @@ public class RegisterUserDto {
 //        this.password = password;
 //        this.matchingPassword = matchingPassword;
 //    }
-    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword) {
+
+    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword, String role, String creditDebitCardNumber, String creditDebitCardName, String creditDebitCardExpMonth, String creditDebitCardExpYear) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -123,7 +149,13 @@ public class RegisterUserDto {
         this.username = username;
         this.password = password;
         this.matchingPassword = matchingPassword;
+        this.role = role;
+        this.creditDebitCardNumber = creditDebitCardNumber;
+        this.creditDebitCardName = creditDebitCardName;
+        this.creditDebitCardExpMonth = creditDebitCardExpMonth;
+        this.creditDebitCardExpYear = creditDebitCardExpYear;
     }
+   
 
 //    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String address, String addressNumber, String city, String state, String country, String postalCode, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword) {
 //        this.name = name;
@@ -143,18 +175,6 @@ public class RegisterUserDto {
 //        this.password = password;
 //        this.matchingPassword = matchingPassword;
 //    }
-    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String email, String mobileNumber, String username, String password, String matchingPassword) {
-
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.username = username;
-        this.password = password;
-        this.matchingPassword = matchingPassword;
-    }
 
     public String getName() {
         return name;
@@ -281,4 +301,51 @@ public class RegisterUserDto {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getCreditDebitCardNumber() {
+        return creditDebitCardNumber;
+    }
+
+    public void setCreditDebitCardNumber(String creditDebitCardNumber) {
+        this.creditDebitCardNumber = creditDebitCardNumber;
+    }
+
+    public String getCreditDebitCardName() {
+        return creditDebitCardName;
+    }
+
+    public void setCreditDebitCardName(String creditDebitCardName) {
+        this.creditDebitCardName = creditDebitCardName;
+    }
+
+    public String getCreditDebitCardExpMonth() {
+        return creditDebitCardExpMonth;
+    }
+
+    public void setCreditDebitCardExpMonth(String creditDebitCardExpMonth) {
+        this.creditDebitCardExpMonth = creditDebitCardExpMonth;
+    }
+
+    public String getCreditDebitCardExpYear() {
+        return creditDebitCardExpYear;
+    }
+
+    public void setCreditDebitCardExpYear(String creditDebitCardExpYear) {
+        this.creditDebitCardExpYear = creditDebitCardExpYear;
+    }
+
+    public MultipartFile getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(MultipartFile userPhoto) {
+        this.userPhoto = userPhoto;
+    }
 }

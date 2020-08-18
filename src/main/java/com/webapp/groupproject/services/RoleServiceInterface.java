@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webapp.groupproject.repositories;
+package com.webapp.groupproject.services;
 
 import com.webapp.groupproject.models.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author alexk
  */
-public interface RoleRepository extends JpaRepository<Role, Integer>{
+public interface RoleServiceInterface {
     
-    public Role findByRole (String role);
+    public Role findByRoleName (String roleName);
     
 }

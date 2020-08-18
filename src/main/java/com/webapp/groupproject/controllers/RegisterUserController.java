@@ -5,17 +5,24 @@
  */
 package com.webapp.groupproject.controllers;
 
+import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
+import com.webapp.groupproject.models.Role;
 //import com.webapp.groupproject.models.UserAdressInfo;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.models.UserPersonalInfo;
+import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
+import com.webapp.groupproject.services.RoleServiceInterface;
 //import com.webapp.groupproject.services.UserAddressInfoServiceInterface;
 import com.webapp.groupproject.services.UserContactInfoServiceInterface;
 import com.webapp.groupproject.services.UserPersonalInfoServiceInterface;
 import com.webapp.groupproject.utils.PersistenceUtils;
 import com.webapp.groupproject.validators.RegisterUserValidator;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +34,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -43,11 +52,17 @@ public class RegisterUserController {
 
     @Autowired
     UserContactInfoServiceInterface userContactServiseInterface;
+    
+    @Autowired
+    RoleServiceInterface roleServiceInterface;
 
 //    @Autowired
 //    UserAddressInfoServiceInterface userAddressInfoServiceInterface;
     @Autowired
     UserPersonalInfoServiceInterface userPersonalServiceInterface;
+    
+    @Autowired
+    CreditDebitCardServiceInterface creditDebitCardServiceInterface;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -64,19 +79,35 @@ public class RegisterUserController {
     }
 
     @PostMapping("register")
-    public String registerUserToDatabase(@Valid @ModelAttribute("registerUser") RegisterUserDto registerUserDto, BindingResult bindingResult) {
+    public String registerUserToDatabase(@Valid @ModelAttribute("registerUser") RegisterUserDto registerUserDto, 
+            BindingResult bindingResult) throws IOException {
+        
         if (bindingResult.hasErrors()) {
 
             return "registerform";
 
         }
+        
         registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         MyUser myuser = PersistenceUtils.fillMyUserProperties(registerUserDto);
+        
+        // insert new user's credit/debit card
+        CreditDebitCard creditDebitCard = PersistenceUtils.fillCreditDebitCardInfo(registerUserDto);
+        creditDebitCardServiceInterface.saveCreditDebitCard(creditDebitCard);
+        CreditDebitCard insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(creditDebitCard.getCreditDebitCardNumber());
+        
+        //withdraw role by name from database and add it to user based on his subscription
+        Role roleAssigned = roleServiceInterface.findByRoleName("ROLE_"+registerUserDto.getRole());
+        myuser.setRoleId(roleAssigned);
+        
         myUserServiceInterface.insertMyUser(myuser);
 
         //take the userId from the database
         MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
-
+        List<CreditDebitCard> cdc = (List) insertedUser.getCreditDebitCardCollection();
+        // adding the relationship between user and credit/debit card
+        insertedUser.getCreditDebitCardCollection().add(insertedCreditDebitCard);
+        myUserServiceInterface.insertMyUser(insertedUser);
 //        //insert the data at table UseraddressInfo
 //            UserAdressInfo userAddressInfo = new UserAdressInfo();
 //            userAddressInfo.setAdress(registerUserDto.getAddress());
@@ -95,6 +126,9 @@ public class RegisterUserController {
         //insert data to user_personal _info table
         UserPersonalInfo userPersonalInfo = PersistenceUtils.fillUserPersonalInfoProperties(registerUserDto, myuser);
         userPersonalServiceInterface.insertUserPersonalInfo(userPersonalInfo);
+        
+        registerUserDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+insertedUser.getUserId()+".jpg"));
+        
         return "demologin";
 
     }

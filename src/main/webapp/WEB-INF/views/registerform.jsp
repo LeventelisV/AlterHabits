@@ -18,7 +18,7 @@
     <body>
 
         <springform:form  method="post" action="${pageContext.request.contextPath}/register"
-                          modelAttribute="registerUser" >
+                          modelAttribute="registerUser" enctype="multipart/form-data">
             Name:     
             <springform:input path="name"/> 
             <springform:errors path="name" cssClass="error"/> <br><br>
@@ -100,8 +100,37 @@
             <springform:errors path="matchingPassword" cssClass="error"/>
             <br><br>
             
+            <springform:radiobutton path="role" value="USER" />USER
+            <springform:radiobutton path="role" value="PREMIUM_USER" />PREMIUM USER
+            <br>
+            <springform:errors path="role"/>
+            <br><br>
             
-
+            Enter Credit/Debit card number:     
+            <springform:input path="creditDebitCardNumber"/>
+            <springform:errors path="creditDebitCardNumber"/>
+            <br><br>
+            
+            Enter Credit/Debit card full name:     
+            <springform:input path="creditDebitCardName"/>
+            <springform:errors path="creditDebitCardName"/>
+            <br><br>
+            
+            Enter Credit/Debit card expiration month:     
+            <springform:input path="creditDebitCardExpMonth"/>
+            <springform:errors path="creditDebitCardExpMonth"/>
+            <br><br>
+            
+            Enter Credit/Debit card expiration year:     
+            <springform:input path="creditDebitCardExpYear"/>
+            <springform:errors path="creditDebitCardExpYear"/>
+            <br><br>
+            
+            Insert an image of yourself:
+            <springform:input path="userPhoto" type="file"/>
+            <springform:errors path="userPhoto"/>
+            <br><br>
+            
             <button type="submit" class="btn btn-primary">Register</button>
         </springform:form>
     </body>

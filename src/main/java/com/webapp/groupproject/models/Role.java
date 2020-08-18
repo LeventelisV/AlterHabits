@@ -6,7 +6,9 @@
 package com.webapp.groupproject.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,15 +36,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Role.findByRole", query = "SELECT r FROM Role r WHERE r.role = :role")})
 public class Role implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "role")
+    private String role;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "role_id")
     private Integer roleId;
-    @Basic(optional = false)
-    @Column(name = "role")
-    private String role;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private Collection<MyUser> myUserCollection;
 
     public Role() {
     }
@@ -60,12 +71,14 @@ public class Role implements Serializable {
         this.roleId = roleId;
     }
 
-    public String getRole() {
-        return role;
+
+    @XmlTransient
+    public Collection<MyUser> getMyUserCollection() {
+        return myUserCollection;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setMyUserCollection(Collection<MyUser> myUserCollection) {
+        this.myUserCollection = myUserCollection;
     }
 
     @Override
@@ -91,6 +104,14 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "com.webapp.groupproject.models.Role[ roleId=" + roleId + " ]";
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
 }

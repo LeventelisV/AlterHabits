@@ -5,15 +5,15 @@
  */
 package com.webapp.groupproject.repositories;
 
-import com.webapp.groupproject.models.Role;
+import com.webapp.groupproject.models.CreditDebitCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author alexk
  */
-public interface RoleRepository extends JpaRepository<Role, Integer>{
+public interface CreditDebitCardRepository extends JpaRepository<CreditDebitCard, Integer>{
     
-    public Role findByRole (String role);
+    public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
     
 }

@@ -36,16 +36,14 @@ public class MyUserServiceImplementation implements MyUserServiceInterface {
         if (myUser == null) {
             throw new UsernameNotFoundException("Invalid Username");
         }
-        User springSecurityUser = new User(myUser.getUsername(), myUser.getUserPassword(), mapRolesToAuthorities(myUser.getRoles()));
+        User springSecurityUser = new User(myUser.getUsername(), myUser.getUserPassword(), mapRoleToAuthorities(myUser.getRoleId()));
         return springSecurityUser;
     }
 
-    private List<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
+    private List<? extends GrantedAuthority> mapRoleToAuthorities(Role role) {
         List<GrantedAuthority> authorities = new ArrayList();
-        for (Role role : roles) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRole());
             authorities.add(authority);
-        }
         return authorities;
     }
 

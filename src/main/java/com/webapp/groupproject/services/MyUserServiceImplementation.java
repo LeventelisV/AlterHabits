@@ -10,6 +10,7 @@ import com.webapp.groupproject.models.Role;
 import com.webapp.groupproject.repositories.MyUserRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -48,13 +49,21 @@ public class MyUserServiceImplementation implements MyUserServiceInterface {
     }
 
     @Override
-    public void insertMyUser(MyUser user) {
+    public void saveMyUser(MyUser user) {
         myUserRepository.save(user);
     }
 
     @Override
     public MyUser findByUsername(String username){
       return   myUserRepository.findByUsername(username);
+    }
+    
+    public MyUser findById(Integer userId) {
+       Optional<MyUser> userRetrieved = myUserRepository.findById(userId);
+       if(userRetrieved.isPresent()){
+           return userRetrieved.get();
+       }
+        return null;
     }
     
 

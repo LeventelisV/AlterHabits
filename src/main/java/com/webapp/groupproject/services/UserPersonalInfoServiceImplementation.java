@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.services;
 
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserPersonalInfo;
 import com.webapp.groupproject.repositories.UserPersonalInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,16 @@ public class UserPersonalInfoServiceImplementation implements UserPersonalInfoSe
    @Autowired
    UserPersonalInfoRepository userPersonalInfoRepository;
    
-   public void insertUserPersonalInfo(UserPersonalInfo upi){
+   @Override
+   public void saveUserPersonalInfo(UserPersonalInfo upi){
        userPersonalInfoRepository.save(upi);
+   }
+   
+   @Override
+   public UserPersonalInfo findUserPersonalInfoByUserId(MyUser user) {
+       
+       return userPersonalInfoRepository.findByUserId(user);
+       
    }
 
 }

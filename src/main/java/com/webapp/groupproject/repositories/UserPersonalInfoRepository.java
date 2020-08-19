@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.repositories;
 
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserPersonalInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserPersonalInfoRepository extends JpaRepository<UserPersonalInfo,Integer> {
     
+    public UserPersonalInfo findByUserId(MyUser userId);
     
 }

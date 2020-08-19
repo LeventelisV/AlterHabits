@@ -100,14 +100,14 @@ public class RegisterUserController {
         Role roleAssigned = roleServiceInterface.findByRoleName("ROLE_"+registerUserDto.getRole());
         myuser.setRoleId(roleAssigned);
         
-        myUserServiceInterface.insertMyUser(myuser);
+        myUserServiceInterface.saveMyUser(myuser);
 
         //take the userId from the database
         MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
         List<CreditDebitCard> cdc = (List) insertedUser.getCreditDebitCardCollection();
         // adding the relationship between user and credit/debit card
         insertedUser.getCreditDebitCardCollection().add(insertedCreditDebitCard);
-        myUserServiceInterface.insertMyUser(insertedUser);
+        myUserServiceInterface.saveMyUser(insertedUser);
 //        //insert the data at table UseraddressInfo
 //            UserAdressInfo userAddressInfo = new UserAdressInfo();
 //            userAddressInfo.setAdress(registerUserDto.getAddress());
@@ -121,11 +121,11 @@ public class RegisterUserController {
 
         // insert data to user_contact_info_table
         UserContactInfo userContactInfo = PersistenceUtils.fillUserContactInfoProperties(registerUserDto, myuser);
-        userContactServiseInterface.insertUserContactInfo(userContactInfo);
+        userContactServiseInterface.saveUserContactInfo(userContactInfo);
 
         //insert data to user_personal _info table
         UserPersonalInfo userPersonalInfo = PersistenceUtils.fillUserPersonalInfoProperties(registerUserDto, myuser);
-        userPersonalServiceInterface.insertUserPersonalInfo(userPersonalInfo);
+        userPersonalServiceInterface.saveUserPersonalInfo(userPersonalInfo);
         
         registerUserDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+insertedUser.getUserId()+".jpg"));
         

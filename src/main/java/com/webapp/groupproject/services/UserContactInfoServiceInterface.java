@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.services;
 
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserContactInfo;
 
 /**
@@ -15,5 +16,14 @@ public interface UserContactInfoServiceInterface {
     
     public boolean checkIfEmailExists(String email);
     
-    public void insertUserContactInfo(UserContactInfo userContactInfo);
+    public void saveUserContactInfo(UserContactInfo userContactInfo);
+    
+    public UserContactInfo findUserContactInfoByUserId(MyUser user);
+    
+    public boolean checkIfMobileNumberExists(String mobileNumber);
+    
+    public UserContactInfo findUserContactInfoByEmail(String email);
+    
+    public UserContactInfo findUserContactInfoByMobileNumber(String mobileNumber);
+    
 }

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author vaggelis
  */
 public class HelperMethods {
-
+    
     public static Date parseStringToDate(String s) {
         
         Date date = null;

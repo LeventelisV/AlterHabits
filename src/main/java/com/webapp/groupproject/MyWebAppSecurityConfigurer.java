@@ -39,9 +39,12 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
                .authorizeRequests()
                .antMatchers("/").hasAnyRole("ADMIN", "USER")
                .antMatchers("/quiz/**").hasAnyRole("ADMIN", "USER")
+               .antMatchers("/home").hasAnyRole("ADMIN", "USER")
+               .antMatchers("/updateinfo").hasAnyRole("ADMIN", "USER")
                .and()
                .formLogin()
                .loginPage("/loginPage").permitAll()
+               .failureUrl("/login-error")
                .and()
                .logout().permitAll();
     }

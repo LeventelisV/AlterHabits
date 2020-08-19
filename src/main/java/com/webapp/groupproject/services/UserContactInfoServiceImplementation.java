@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.services;
 
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.repositories.UserContactInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,30 @@ public class UserContactInfoServiceImplementation implements UserContactInfoServ
     }
 
     @Override
-    public void insertUserContactInfo(UserContactInfo userContactInfo) {
+    public void saveUserContactInfo(UserContactInfo userContactInfo) {
         userContactInfoRepository.save(userContactInfo);
     }
     
+    @Override
+    public UserContactInfo findUserContactInfoByUserId(MyUser user) {
+        return userContactInfoRepository.findByUserId(user);
+    }
+    
+    @Override
+    public UserContactInfo findUserContactInfoByEmail(String email) {
+        return userContactInfoRepository.findByEmail(email);
+    }
+    
+    @Override
+    public boolean checkIfMobileNumberExists(String mobileNumber) {
+        if(userContactInfoRepository.existsByMobileNumber(mobileNumber)){
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public UserContactInfo findUserContactInfoByMobileNumber(String mobileNumber) {
+        return userContactInfoRepository.findByMobileNumber(mobileNumber);
+    }
 }

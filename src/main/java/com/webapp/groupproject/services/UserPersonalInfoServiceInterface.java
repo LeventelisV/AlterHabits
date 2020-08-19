@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.services;
 
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserPersonalInfo;
 
 /**
@@ -12,6 +13,9 @@ import com.webapp.groupproject.models.UserPersonalInfo;
  * @author vaggelis
  */
 public interface UserPersonalInfoServiceInterface {
-    public void insertUserPersonalInfo(UserPersonalInfo upi);
+    
+    public void saveUserPersonalInfo(UserPersonalInfo upi);
+    
+    public UserPersonalInfo findUserPersonalInfoByUserId(MyUser user);
     
 }

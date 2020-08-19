@@ -9,6 +9,7 @@ package com.webapp.groupproject.models;
  *
  * @author vaggelis
  */
+import com.webapp.groupproject.interfaces.UserDto;
 import java.time.LocalDate;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
@@ -26,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author vaggelis
  */
-public class RegisterUserDto {
+public class RegisterUserDto implements UserDto{
 // TODO ANNOTATIONS FOR VALIDATE
 
     @NotEmpty(message = "Name can't be empty!")

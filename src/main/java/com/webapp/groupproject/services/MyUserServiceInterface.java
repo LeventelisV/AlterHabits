@@ -18,7 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface MyUserServiceInterface extends UserDetailsService {
 
-    void insertMyUser(MyUser user);
+    void saveMyUser(MyUser user);
 
     MyUser findByUsername(String username);
+    
+    public MyUser findById(Integer userId);
 }

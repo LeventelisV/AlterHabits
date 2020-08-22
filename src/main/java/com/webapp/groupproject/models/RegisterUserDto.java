@@ -9,6 +9,8 @@ package com.webapp.groupproject.models;
  *
  * @author vaggelis
  */
+import com.webapp.groupproject.annotations.ImageFileConstraint;
+import com.webapp.groupproject.annotations.ImageSizeConstraint;
 import com.webapp.groupproject.interfaces.UserDto;
 import java.time.LocalDate;
 import javax.validation.constraints.Digits;
@@ -115,6 +117,8 @@ public class RegisterUserDto implements UserDto{
     @Pattern(regexp = "^20[0-9]{2}$", message = "Enter a valid 4 digit value starting with 20__ (e.g. 2025)")
     private String creditDebitCardExpYear;
 
+    @ImageFileConstraint
+    @ImageSizeConstraint
     private MultipartFile userPhoto;
     
     public RegisterUserDto() {

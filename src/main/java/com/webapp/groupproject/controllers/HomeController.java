@@ -7,12 +7,21 @@ package com.webapp.groupproject.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.pojo.Activity;
+import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.utils.QuizFilters;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.List;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +37,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @Autowired
+    MyUserServiceInterface myUserServiceInterface;
+    
+    @GetMapping("h")
     public String home() {
         return "newjsf";
     }
@@ -47,7 +59,8 @@ public class HomeController {
             @RequestParam String answer4
     ) throws MalformedURLException, IOException {
         ObjectMapper om = new ObjectMapper();
-        List<Activity> activities = om.readValue(new File("src/main/resources/activities.json"), new TypeReference<List<Activity>>(){});
+        List<Activity> activities = om.readValue(new File("src/main/resources/activities.json"), new TypeReference<List<Activity>>() {
+        });
         List<Activity> filteredActivities = QuizFilters.filterActivitiesBasedOnAnswers(answer1, answer2, answer3, answer4, activities);
         if (filteredActivities.isEmpty()) {
             return null;
@@ -55,5 +68,22 @@ public class HomeController {
             return om.writeValueAsString(filteredActivities);
         }
 
+    }
+
+    @GetMapping(value = "profilephoto", produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    public byte[] showProfilePhotograph() throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsersUsername = authentication.getName();
+        MyUser currentUser = myUserServiceInterface.findByUsername(currentUsersUsername);
+        InputStream in = getClass()
+                .getResourceAsStream("E:\\Downloads\\UsersPhotos\\"+currentUser.getUserId()+".jpg");
+        InputStream inn = new FileInputStream(new File("E:\\Downloads\\UsersPhotos\\9.jpg"));
+        return IOUtils.toByteArray(inn);
+    }
+    
+    @RequestMapping(value = "photo", method = { RequestMethod.GET, RequestMethod.POST })
+    public String showPhoto(){
+        return "profilephoto";
     }
 }

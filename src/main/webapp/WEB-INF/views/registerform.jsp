@@ -40,36 +40,6 @@
             <springform:input type="date" path="dateOfBirth"/>
             <springform:errors path="dateOfBirth" cssClass="error"/><br><br>
             
-<!--            Address:     
-            <%--<springform:input path="address"/>--%> 
-            <%--<springform:errors path="address" cssClass="error"/>--%>
-            <br><br>
-            
-            Address number:     
-            <%--<springform:input type="number" path="addressNumber"/>--%>
-            <%--<springform:errors path="addressNumber" cssClass="error"/>--%>
-            <br><br>
-            
-            City:     
-            <%--<springform:input path="city"/>--%> 
-            <%--<springform:errors path="city" cssClass="error"/>--%> 
-            <br><br>
-            
-            Postal Code:     
-            <%--<springform:input type="number" path="postalCode"/>--%>
-            <%--<springform:errors path="postalCode" cssClass="error"/>--%>
-            <br><br>
-            
-            State:     
-            <%--<springform:input path="state"/>--%> 
-            <%--<springform:errors path="state" cssClass="error"/>--%> 
-            <br><br>
-            
-            Country:     
-            <%--<springform:input  path="country"/>--%>
-            <%--<springform:errors path="country" cssClass="error"/>--%>
-            <br><br>-->
-            
             Email:     
             <springform:input  path="email"/>
             <springform:errors path="email" cssClass="error"/>

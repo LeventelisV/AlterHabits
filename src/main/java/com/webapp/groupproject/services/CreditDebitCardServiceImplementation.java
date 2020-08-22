@@ -7,6 +7,8 @@ package com.webapp.groupproject.services;
 
 import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.repositories.CreditDebitCardRepository;
+import java.util.Optional;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,16 @@ public class CreditDebitCardServiceImplementation implements CreditDebitCardServ
         return creditDebitCardRepository.findByCreditDebitCardNumber(creditDebitCardNumber);
     }
     
+    public boolean checkIfCreditDebitCardNumberExists(String creditDebitCardNumber) {
+        return creditDebitCardRepository.existsByCreditDebitCardNumber(creditDebitCardNumber);
+    }
+    
+    public CreditDebitCard findByCreditDebitCardId(Integer creditDebitCardId) {
+       Optional<CreditDebitCard> cardRetrieved = creditDebitCardRepository.findById(creditDebitCardId);
+       if(cardRetrieved.isPresent()) {
+           return cardRetrieved.get();
+       }
+       return null;
+    }
     
 }

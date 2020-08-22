@@ -7,10 +7,12 @@ package com.webapp.groupproject.validators;
 
 import com.webapp.groupproject.SpringContext;
 import com.webapp.groupproject.interfaces.UserDto;
+import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
 import com.webapp.groupproject.models.UpdateUserDto;
 import com.webapp.groupproject.models.UserContactInfo;
+import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceImplementation;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.services.UserContactInfoServiceImplementation;
@@ -45,6 +47,10 @@ public class ValidatorMethods {
 
     private UserContactInfoServiceInterface getUserContactInfoService() {
         return SpringContext.getBean(UserContactInfoServiceInterface.class);
+    }
+    
+    private CreditDebitCardServiceInterface getCardServiceInterface() {
+        return SpringContext.getBean(CreditDebitCardServiceInterface.class);
     }
 
     // check if user chose gender
@@ -176,7 +182,7 @@ public class ValidatorMethods {
         if (userDto instanceof UpdateUserDto) {
             UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
             if (getUserContactInfoService().checkIfEmailExists(updateUserDto.getEmail())) {
-                if(!checkIfDepricatedEmailBelongsToCurrentUser(updateUserDto)){
+                if(!checkIfUsedEmailBelongsToCurrentUser(updateUserDto)){
                 errors.rejectValue("email", "email.not.unique");
                 }
             }
@@ -191,25 +197,6 @@ public class ValidatorMethods {
             }
         }
     }
-
-    void checkIfUsersInsertedFileIsPhoto(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            String extension = FilenameUtils.getExtension(registerUserDto.getUserPhoto().getOriginalFilename());
-            if (extension.equals("jpg") || extension.equals("png")) {
-                errors.rejectValue("userPhoto", "file.not.photo");
-            }
-        }
-    }
-
-    void checkIfUsersPhotosSizeBiggerThanAllowed(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            if (registerUserDto.getUserPhoto().getSize() > 225443840) {
-                errors.rejectValue("userPhoto", "photos.size.too.big");
-            }
-        }
-    }
     
     void checkIfMobileNumberUnique(UserDto userDto, Errors errors) {
         if (userDto instanceof RegisterUserDto) {
@@ -221,7 +208,7 @@ public class ValidatorMethods {
         if (userDto instanceof UpdateUserDto) {
             UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
             if (getUserContactInfoService().checkIfMobileNumberExists(updateUserDto.getMobileNumber())) {
-                if(!checkIfDepricatedPhoneNumberBelongsToCurrentUser(updateUserDto)){
+                if(!checkIfUsedPhoneNumberBelongsToCurrentUser(updateUserDto)){
                 errors.rejectValue("mobileNumber", "mobile.number.not.unique");
                 }
             }
@@ -233,7 +220,7 @@ public class ValidatorMethods {
      and if so let it be,
     if it isn't, reject value because already exists for another users contact info
      */
-    private boolean checkIfDepricatedEmailBelongsToCurrentUser(UpdateUserDto updateUserDto) {
+    private boolean checkIfUsedEmailBelongsToCurrentUser(UpdateUserDto updateUserDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
         MyUser currentUser = getMyUserService().findByUsername(currentUsersUsername);
@@ -251,7 +238,7 @@ public class ValidatorMethods {
      and if so let it be,
     if it isn't, reject value because already exists for another users contact info
      */
-    private boolean checkIfDepricatedPhoneNumberBelongsToCurrentUser(UpdateUserDto updateUserDto) {
+    private boolean checkIfUsedPhoneNumberBelongsToCurrentUser(UpdateUserDto updateUserDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
         MyUser currentUser = getMyUserService().findByUsername(currentUsersUsername);
@@ -262,5 +249,17 @@ public class ValidatorMethods {
             return true;
         }
         return false;
+    }
+    
+    void checkIfCreditDebitCardCredentialsValid(UserDto userDto, Errors errors) {
+        RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+        CreditDebitCard registeredCard = getCardServiceInterface().findByCreditDebitCardNumber(registerUserDto.getCreditDebitCardNumber());
+        if(registeredCard.getCreditDebitCardName().equals(registerUserDto.getCreditDebitCardName())
+                && registeredCard.getCreditDebitCardExpirationYear() == Integer.parseInt(registerUserDto.getCreditDebitCardExpYear())
+                && registeredCard.getCreditDebitCardExpirationMonth() == Integer.parseInt(registerUserDto.getCreditDebitCardExpMonth())) {
+            
+        }else{
+            errors.rejectValue("creditDebitCardNumber", "card.wrong.credentials");
+        }
     }
 }

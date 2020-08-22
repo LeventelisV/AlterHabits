@@ -91,11 +91,6 @@ public class RegisterUserController {
         registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         MyUser myuser = PersistenceUtils.fillMyUserProperties(registerUserDto);
         
-        // insert new user's credit/debit card
-        CreditDebitCard creditDebitCard = PersistenceUtils.fillCreditDebitCardInfo(registerUserDto);
-        creditDebitCardServiceInterface.saveCreditDebitCard(creditDebitCard);
-        CreditDebitCard insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(creditDebitCard.getCreditDebitCardNumber());
-        
         //withdraw role by name from database and add it to user based on his subscription
         Role roleAssigned = roleServiceInterface.findByRoleName("ROLE_"+registerUserDto.getRole());
         myuser.setRoleId(roleAssigned);
@@ -105,19 +100,21 @@ public class RegisterUserController {
         //take the userId from the database
         MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
         List<CreditDebitCard> cdc = (List) insertedUser.getCreditDebitCardCollection();
+          
+        CreditDebitCard insertedCreditDebitCard;
+        
+        if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(registerUserDto.getCreditDebitCardNumber())) {
+            insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(registerUserDto.getCreditDebitCardNumber());
+        }else{
+         // insert new user's credit/debit card
+            CreditDebitCard creditDebitCard = PersistenceUtils.fillCreditDebitCardInfo(registerUserDto);
+            creditDebitCardServiceInterface.saveCreditDebitCard(creditDebitCard);
+            insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(creditDebitCard.getCreditDebitCardNumber());
+        }
+        
         // adding the relationship between user and credit/debit card
         insertedUser.getCreditDebitCardCollection().add(insertedCreditDebitCard);
         myUserServiceInterface.saveMyUser(insertedUser);
-//        //insert the data at table UseraddressInfo
-//            UserAdressInfo userAddressInfo = new UserAdressInfo();
-//            userAddressInfo.setAdress(registerUserDto.getAddress());
-//            userAddressInfo.setAdressNumber(Integer.parseInt(registerUserDto.getAddressNumber()));
-//            userAddressInfo.setCity(registerUserDto.getCity());
-//            userAddressInfo.setCountry(registerUserDto.getCountry());
-//            userAddressInfo.setPostalCode(Integer.parseInt(registerUserDto.getPostalCode()));
-//            userAddressInfo.setState(registerUserDto.getState());
-//            userAddressInfo.setUserId(insertedUser);
-//            userAddressInfoServiceInterface.insertUserAddressInfo(userAddressInfo);
 
         // insert data to user_contact_info_table
         UserContactInfo userContactInfo = PersistenceUtils.fillUserContactInfoProperties(registerUserDto, myuser);

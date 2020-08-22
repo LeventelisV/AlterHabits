@@ -7,6 +7,8 @@ package com.webapp.groupproject.validators;
 
 import com.webapp.groupproject.interfaces.UserDto;
 import com.webapp.groupproject.models.RegisterUserDto;
+import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -18,7 +20,8 @@ import org.springframework.validation.Validator;
 @Component
 public class RegisterUserValidator implements Validator {
 
-   
+   @Autowired
+   CreditDebitCardServiceInterface creditDebitCardServiceInterface;
 
     @Override
     public boolean supports(Class<?> type) {
@@ -44,10 +47,10 @@ public class RegisterUserValidator implements Validator {
         validatorMethods.checkIfPasswordsMatch(registerUserDto, errors);
         validatorMethods.checkIfEmailUnique(registerUserDto, errors);
         validatorMethods.checkIfUserInsertedPhoto(registerUserDto, errors);
-        validatorMethods.checkIfUsersInsertedFileIsPhoto(registerUserDto, errors);
-        validatorMethods.checkIfUsersPhotosSizeBiggerThanAllowed(registerUserDto, errors);
         validatorMethods.checkIfMobileNumberUnique(registerUserDto, errors);
-
+        if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(((RegisterUserDto) registerUserDto).getCreditDebitCardNumber())) {
+            validatorMethods.checkIfCreditDebitCardCredentialsValid(registerUserDto, errors);
+        }
     }
 
     

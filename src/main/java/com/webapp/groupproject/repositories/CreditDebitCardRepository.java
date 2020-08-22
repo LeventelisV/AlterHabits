@@ -16,4 +16,6 @@ public interface CreditDebitCardRepository extends JpaRepository<CreditDebitCard
     
     public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
     
+    public boolean existsByCreditDebitCardNumber(String creditDebitCardNumber);
+    
 }

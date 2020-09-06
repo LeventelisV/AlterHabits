@@ -8,9 +8,13 @@ package com.webapp.groupproject.utils;
 import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
+import com.webapp.groupproject.models.Shop;
+import com.webapp.groupproject.models.ShopDto;
 import com.webapp.groupproject.models.UpdateUserDto;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.models.UserPersonalInfo;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -78,21 +82,33 @@ public class PersistenceUtils {
         usersInfoToUpdate.setMobileNumber(usersPersonalInfo.getMobileNumber());
 
     }
-    
+
     public static void updateUsersPersonalInfo(UpdateUserDto userUpdates, UserPersonalInfo usersOldPersonalInfo) {
-    
+
         usersOldPersonalInfo.setFirstName(userUpdates.getName());
         usersOldPersonalInfo.setLastName(userUpdates.getSurname());
         usersOldPersonalInfo.setGender(userUpdates.getGender());
         usersOldPersonalInfo.setDateOfBirth(HelperMethods.parseStringToDate(userUpdates.getDateOfBirth()));
-        
+
     }
-    
+
     public static void updateUsersContactInfo(UpdateUserDto userUpdates, UserContactInfo usersOldContactInfo) {
-    
+
         userUpdates.setEmail(userUpdates.getEmail());
         userUpdates.setPhoneNumber(userUpdates.getPhoneNumber());
         userUpdates.setMobileNumber(userUpdates.getMobileNumber());
-    
+
+    }
+
+    public static List<ShopDto> fillShopDto(List<Shop> shops) {
+        List<ShopDto> shopsDto = new ArrayList();
+
+        for (Shop shop : shops) {
+            ShopDto shopDto = new ShopDto();
+            shopDto.setShopName(shop.getShopName());
+            shopsDto.add(shopDto);
+            ;
+        }
+        return shopsDto;
     }
 }

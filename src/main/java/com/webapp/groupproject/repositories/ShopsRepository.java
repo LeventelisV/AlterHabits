@@ -5,17 +5,25 @@
  */
 package com.webapp.groupproject.repositories;
 
-import com.webapp.groupproject.models.CreditDebitCard;
+import com.webapp.groupproject.models.Shop;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author alexk
+ * @author vaggelis
  */
 @Repository
-public interface CreditDebitCardRepository extends JpaRepository<CreditDebitCard, Integer>{
+public interface ShopsRepository extends JpaRepository<Shop, Integer>{
+     
     
-    public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
+//    @Query(value="SELECT distinct shop_id,shop_name FROM SHOPS",nativeQuery=true)
+//    public List<Shop> showAllShops();
+        
+    
+  
+    
     
 }

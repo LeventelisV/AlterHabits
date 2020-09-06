@@ -37,7 +37,7 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http
                .authorizeRequests()
-               .antMatchers("/").hasAnyRole("ADMIN", "USER")
+               .antMatchers("/**").hasAnyRole("ADMIN", "USER")
                .antMatchers("/quiz/**").hasAnyRole("ADMIN", "USER")
                .antMatchers("/home").hasAnyRole("ADMIN", "USER")
                .antMatchers("/updateinfo").hasAnyRole("ADMIN", "USER")
@@ -54,6 +54,7 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(myUserServiceInterface);
         auth.setPasswordEncoder(passwordEncoder());
+        
         return auth;
     }
     @Bean

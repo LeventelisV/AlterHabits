@@ -5,17 +5,17 @@
  */
 package com.webapp.groupproject.repositories;
 
-import com.webapp.groupproject.models.CreditDebitCard;
+import com.webapp.groupproject.models.Activity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author alexk
+ * @author vaggelis
  */
 @Repository
-public interface CreditDebitCardRepository extends JpaRepository<CreditDebitCard, Integer>{
+public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     
-    public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
+    public Activity findById(int id);
     
 }

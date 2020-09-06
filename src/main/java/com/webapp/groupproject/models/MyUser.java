@@ -21,10 +21,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -50,6 +52,9 @@ public class MyUser implements Serializable {
     @Size(min = 1, max = 68)
     @Column(name = "user_password")
     private String userPassword;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<Reservation> reservationCollection;
+   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -140,6 +145,19 @@ public class MyUser implements Serializable {
         return "com.webapp.groupproject.models.MyUser[ userId=" + userId + " ]";
     }
 
+
+   
+  
+
+//    @XmlTransient
+//    public Collection<Reservation> getReservationCollection() {
+//        return reservationCollection;
+//    }
+//
+//    public void setReservationCollection(Collection<Reservation> reservationCollection) {
+//        this.reservationCollection = reservationCollection;
+//    }
+
     public String getUsername() {
         return username;
     }
@@ -147,5 +165,21 @@ public class MyUser implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
+  
+
+    @XmlTransient
+    public Collection<Reservation> getReservationCollection() {
+        return reservationCollection;
+    }
+
+    public void setReservationCollection(Collection<Reservation> reservationCollection) {
+        this.reservationCollection = reservationCollection;
+    }
+
+
+ 
+
+   
     
 }

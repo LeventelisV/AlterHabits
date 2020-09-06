@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form:form method="POST" action="">
+        <form:form method="POST" action="${pageContext.request.contextPath}/loginPage">
             <p>
                 User name: <input type="text" name="username"/>
             </p>

@@ -127,7 +127,7 @@ public class RegisterUserController {
         UserPersonalInfo userPersonalInfo = PersistenceUtils.fillUserPersonalInfoProperties(registerUserDto, myuser);
         userPersonalServiceInterface.saveUserPersonalInfo(userPersonalInfo);
         
-        registerUserDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+insertedUser.getUserId()+".jpg"));
+        registerUserDto.getUserPhoto().transferTo(new File("C:\\Users\\vaggelis\\Documents\\projectfotos"+insertedUser.getUserId()+".jpg"));
         
         return "demologin";
 

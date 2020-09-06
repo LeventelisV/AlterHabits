@@ -23,6 +23,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author vaggelis
  */
 @Entity
-@Table(name = "shops")
+@Table(name = "shops",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"longitude", "latitude"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Shop.findAll", query = "SELECT s FROM Shop s")
@@ -44,28 +47,38 @@ public class Shop implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "shop_name")
+    @Column(name = "shop_name", unique = true)
     private String shopName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
-    @Column(name = "SHOP_PHOTO")
+    @Size(min = 1, max = 100)
+    @Column(name = "SHOP_PHOTO", unique = true)
     private String shopPhoto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shopId")
     private Collection<ShopSubscriptionAccess> shopSubscriptionAccessCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sHOPid")
     private Collection<Reservation> reservationCollection;
-    
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "longitude")
+    private String longitude;
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "latitude")
+    private String latitude;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "shop_id")
     private Integer shopId;
-    @JoinTable(name="shops_activities",joinColumns={@JoinColumn(name="shop_id")},
-            inverseJoinColumns={@JoinColumn(name="activity_id")})
+    @JoinTable(name = "shops_activities", joinColumns = {
+        @JoinColumn(name = "shop_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "activity_id")})
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Activity> activities=new ArrayList<Activity>();
+    private List<Activity> activities = new ArrayList<Activity>();
 
     public Shop() {
     }
@@ -78,10 +91,11 @@ public class Shop implements Serializable {
         this.shopId = shopId;
         this.shopName = shopName;
     }
-    public Shop(Integer shopId, String shopName,List<Activity> activities) {
+
+    public Shop(Integer shopId, String shopName, List<Activity> activities) {
         this.shopId = shopId;
         this.shopName = shopName;
-        this.activities= activities;
+        this.activities = activities;
     }
 
     public Integer getShopId() {
@@ -108,8 +122,6 @@ public class Shop implements Serializable {
         this.activities = activities;
     }
 
-
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -135,7 +147,6 @@ public class Shop implements Serializable {
         return "com.webapp.groupproject.models.Shops[ shopId=" + shopId + " ]";
     }
 
-  
     public String getShopPhoto() {
         return shopPhoto;
     }
@@ -143,8 +154,6 @@ public class Shop implements Serializable {
     public void setShopPhoto(String shopPhoto) {
         this.shopPhoto = shopPhoto;
     }
-
- 
 
     @XmlTransient
     public Collection<Reservation> getReservationCollection() {
@@ -155,7 +164,21 @@ public class Shop implements Serializable {
         this.reservationCollection = reservationCollection;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
     @XmlTransient
     public Collection<ShopSubscriptionAccess> getShopSubscriptionAccessCollection() {
@@ -166,8 +189,4 @@ public class Shop implements Serializable {
         this.shopSubscriptionAccessCollection = shopSubscriptionAccessCollection;
     }
 
-
-
-
-    
 }

@@ -105,9 +105,14 @@ public class PersistenceUtils {
 
         for (Shop shop : shops) {
             ShopDto shopDto = new ShopDto();
+            shopDto.setShopId(shop.getShopId());
             shopDto.setShopName(shop.getShopName());
+            shopDto.setShopPhoto(shop.getShopPhoto());
+            shopDto.setLongitude(shop.getLongitude());
+            shopDto.setLatitude(shop.getLatitude());
+            
             shopsDto.add(shopDto);
-            ;
+            
         }
         return shopsDto;
     }

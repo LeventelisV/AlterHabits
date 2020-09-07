@@ -1,12 +1,10 @@
 <%-- 
-    Document   : trainerform
-    Created on : Jun 25, 2020, 12:13:11 PM
-    Author     : vaggelis
+    Document   : reactregisterform
+    Created on : Aug 22, 2020, 2:41:04 PM
+    Author     : alexk
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="springform" uri="http://www.springframework.org/tags/form"%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 <!DOCTYPE html>
@@ -14,94 +12,155 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
     </head>
     <body>
 
-        <springform:form  method="post" action="${pageContext.request.contextPath}/register"
-                          modelAttribute="registerUser" enctype="multipart/form-data">
+        <form id="form" name="myForm">
             Name:     
-            <springform:input path="name"/> 
-            <springform:errors path="name" cssClass="error"/> <br><br>
-            
+            <input name="name"/><br><br>
+
             Surname:     
-            <springform:input path="surname"/>
-            <springform:errors path="surname" cssClass="error"/><br><br>
-            
+            <input name="surname"/><br><br>
+
             Gender:     
-            <springform:select path="gender">
-                <springform:option value = "NONE" label = "Select"/>
-                <springform:option value = "Male"/>
-                <springform:option value = "Female"/>
-                <springform:option value = "Other"/>
-            </springform:select> 
-            <springform:errors path="gender" cssClass="error"/> <br><br>
-            
+            <select name="gender">
+                <option value = "NONE" label = "Select"/>
+                <option value = "Male"/>
+                <option value = "Female"/>
+                <option value = "Other"/>
+            </select> <br><br>
+
             Date of birth:     
-            <springform:input type="date" path="dateOfBirth"/>
-            <springform:errors path="dateOfBirth" cssClass="error"/><br><br>
-            
+            <input type="date" name="dateOfBirth"/><br><br>
+
             Email:     
-            <springform:input  path="email"/>
-            <springform:errors path="email" cssClass="error"/>
+            <input  name="email"/>
             <br><br>
-            
+
             Phone Number:     
-            <springform:input path="phoneNumber"/> 
-            <springform:errors path="phoneNumber" cssClass="error"/> 
+            <input name="phoneNumber"/> 
             <br><br>
-            
+
             Mobile number:     
-            <springform:input  path="mobileNumber"/>
-            <springform:errors path="mobileNumber" cssClass="error"/>
+            <input  name="mobileNumber"/>
             <br><br>
-            
-             Username:     
-             <springform:input path="username"/> 
-            <springform:errors path="username" cssClass="error"/> 
+
+            Username:     
+            <input name="username"/> 
             <br><br>
-            
+
             Password:     
-            <springform:input path="password" type="password"/>
-            <springform:errors path="password" cssClass="error"/>
+            <input name="password" type="password"/>
             <br><br>
-            
+
             Retype your password:     
-            <springform:input path="matchingPassword" type="password"/>
-            <springform:errors path="matchingPassword" cssClass="error"/>
+            <input name="matchingPassword" type="password"/>
             <br><br>
-            
-            <springform:radiobutton path="role" value="USER" />USER
-            <springform:radiobutton path="role" value="PREMIUM_USER" />PREMIUM USER
-            <br>
-            <springform:errors path="role"/>
+
+            <radiobutton name="role" value="USER" />USER
+            <radiobutton name="role" value="PREMIUM_USER" />PREMIUM USER
             <br><br>
-            
+
             Enter Credit/Debit card number:     
-            <springform:input path="creditDebitCardNumber"/>
-            <springform:errors path="creditDebitCardNumber"/>
+            <input name="creditDebitCardNumber"/>
             <br><br>
-            
+
             Enter Credit/Debit card full name:     
-            <springform:input path="creditDebitCardName"/>
-            <springform:errors path="creditDebitCardName"/>
+            <input name="creditDebitCardName"/>
             <br><br>
-            
+
             Enter Credit/Debit card expiration month:     
-            <springform:input path="creditDebitCardExpMonth"/>
-            <springform:errors path="creditDebitCardExpMonth"/>
+            <input name="creditDebitCardExpMonth"/>
             <br><br>
-            
+
             Enter Credit/Debit card expiration year:     
-            <springform:input path="creditDebitCardExpYear"/>
-            <springform:errors path="creditDebitCardExpYear"/>
+            <input name="creditDebitCardExpYear"/>
             <br><br>
             
-            Insert an image of yourself:
-            <springform:input path="userPhoto" type="file"/>
-            <springform:errors path="userPhoto"/>
-            <br><br>
-            
+<!--            <input name="usersPhoto" type="file"/>-->
+
             <button type="submit" class="btn btn-primary">Register</button>
-        </springform:form>
+        </form>
+        <script>
+            jQuery(function ($) {
+            const form = document.getElementById("form");
+            form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    let formDataObject = Object.fromEntries(new FormData(this));
+                    const body = JSON.stringify(formDataObject);
+                    const options1 = {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: body
+                    };
+                    fetch('api/register', options1
+                            )
+                            .then(function (response) {
+                                return response.text();
+                            })
+                            .then(function (res) {
+                                let response = JSON.parse(res);
+                                console.log(response.errors);
+                            });
+//-------------------------------------------------------------------------------------------------------------------------                            
+//            e.preventDefault();
+//            formData = new FormData();
+//            formData.append("file", document.forms['myForm']['usersPhoto'].files[0]);
+//            formData.append("properties", new Blob([JSON.stringify({
+//            "name": document.getElementsByName("name").value,
+//            "surname": document.getElementsByName("surname").value,
+//            "gender": document.getElementsByName("gender").value,
+//            "date": document.getElementsByName("date").value,
+//            "email": document.getElementsByName("email").value,
+//            "phoneNumber": document.getElementsByName("phoneNumber").value,
+//            "mobileNumber": document.getElementsByName("mobileNumber").value,
+//            "username": document.getElementsByName("username").value,
+//            "password": document.getElementsByName("password").value,
+//            "matchingPassword": document.getElementsByName("matchingPassword").value,
+//            "role": $('input[name=gender]:checked', '#form').val(),
+//            "creditDebitCardNumber": document.getElementsByName("creditDebitCardNumber").value,
+//            "creditDebitCardName": document.getElementsByName("creditDebitCardName").value,
+//            "creditDebitCardExpMonth": document.getElementsByName("creditDebitCardExpMonth").value,
+//            "creditDebitCardExpYear": document.getElementsByName("creditDebitCardExpYear").value
+//            })], {
+//            type: "application/json"
+//            }));
+//            console.log(formData);
+//            fetch('api/register',{
+//                    method: "POST",
+//                    headers: {
+//                    "Content-Type": undefined
+//                    },
+//                    data: formData
+//                })
+//                    .then(function (response) {
+//                    return response.text();
+//                    })
+//                    .then(function (res) {
+//                   let response = JSON.parse(res);
+//                    console.log(response);
+//                    });
+// ----------------------------------------------------------------------------------------------------------------------
+//                $.ajax({
+//                    url: 'api/createuser',
+//                    type: "POST",
+//                    contentType: "application/json; charset=utf-8",
+//                    data: body, //Stringified Json Object
+//                    async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+//                    cache: false, //This will force requested pages not to be cached by the browser  
+//                    processData: false, //To avoid making query String instead of JSON
+//                    success: function (x) {
+//                        console.log(x);
+//                    }
+//                });
+            });
+            });
+        </script>
     </body>
 </html>

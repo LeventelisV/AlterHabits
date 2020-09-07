@@ -46,7 +46,7 @@ public class RegisterUserValidator implements Validator {
         validatorMethods.checkIfUsernameUnique(registerUserDto, errors);
         validatorMethods.checkIfPasswordsMatch(registerUserDto, errors);
         validatorMethods.checkIfEmailUnique(registerUserDto, errors);
-        validatorMethods.checkIfUserInsertedPhoto(registerUserDto, errors);
+      //  validatorMethods.checkIfUserInsertedPhoto(registerUserDto, errors);
         validatorMethods.checkIfMobileNumberUnique(registerUserDto, errors);
         if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(((RegisterUserDto) registerUserDto).getCreditDebitCardNumber())) {
             validatorMethods.checkIfCreditDebitCardCredentialsValid(registerUserDto, errors);

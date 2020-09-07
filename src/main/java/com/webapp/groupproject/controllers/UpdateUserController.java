@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,24 +74,18 @@ public class UpdateUserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
         UpdateUserDto currentUsersInfoToUpdate = new UpdateUserDto();
-        if (currentUsersUsername != null) {
             MyUser currentUser = myUserServiceInterface.findByUsername(currentUsersUsername);
             UserPersonalInfo currentUsersPersonalInfo = userPersonalInfoServiceInterface.findUserPersonalInfoByUserId(currentUser);
             PersistenceUtils.fillUsersPersonalInfoToUpdate(currentUsersInfoToUpdate, currentUsersPersonalInfo, currentUser.getUserId());
             UserContactInfo currentUsersContactInfo = userContactInfoServiceInterface.findUserContactInfoByUserId(currentUser);
             PersistenceUtils.fillUsersContactInfoToUpdate(currentUsersInfoToUpdate, currentUsersContactInfo);
             mm.addAttribute("updateUser", currentUsersInfoToUpdate);
-        }
 
         return "updateinfo";
     }
 
     @PostMapping("update")
-    public String updateUsersInfo(@Valid @ModelAttribute("updateUser") UpdateUserDto userUpdates,
-            BindingResult br) {
-        if (br.hasErrors()) {
-            return "updateinfo";
-        }
+    public String updateUsersInfo(@Valid @RequestBody UpdateUserDto userUpdates) {
         MyUser userUpdated = myUserServiceInterface.findById(userUpdates.getUserId());
         UserPersonalInfo userPersonalInfoUpdated = userPersonalInfoServiceInterface.findUserPersonalInfoByUserId(userUpdated);
         PersistenceUtils.updateUsersPersonalInfo(userUpdates, userPersonalInfoUpdated);
@@ -109,17 +104,16 @@ public class UpdateUserController {
     }
      
     @PostMapping("updatephoto")
-    public String updateUsersPhoto(@Valid @ModelAttribute("newPhoto") ImageDto usersImageDto,
+    public String updateUsersPhoto(@Valid @RequestBody ImageDto usersImageDto,
             BindingResult result) throws IOException {
         if(result.hasErrors()){
             return "updatephoto";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
-        MyUser currentUser = myUserServiceInterface.findByUsername(currentUsersUsername);
-        File oldPhoto = new File("E:\\Downloads\\UsersPhotos\\" + currentUser.getUserId() + ".jpg");
+        File oldPhoto = new File("E:\\Downloads\\UsersPhotos\\" + currentUsersUsername + ".jpg");
         oldPhoto.delete();
-        usersImageDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\" + currentUser.getUserId() + ".jpg"));
+        usersImageDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\" + currentUsersUsername + ".jpg"));
         return "redirect:photo";
     }
 }

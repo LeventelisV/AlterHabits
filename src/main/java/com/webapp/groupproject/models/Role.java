@@ -5,6 +5,8 @@
  */
 package com.webapp.groupproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -48,6 +50,8 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "role_id")
     private Integer roleId;
+    
+    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private Collection<MyUser> myUserCollection;
 

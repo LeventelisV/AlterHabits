@@ -13,9 +13,7 @@ import com.webapp.groupproject.models.RegisterUserDto;
 import com.webapp.groupproject.models.UpdateUserDto;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
-import com.webapp.groupproject.services.MyUserServiceImplementation;
 import com.webapp.groupproject.services.MyUserServiceInterface;
-import com.webapp.groupproject.services.UserContactInfoServiceImplementation;
 import com.webapp.groupproject.services.UserContactInfoServiceInterface;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -185,15 +183,6 @@ public class ValidatorMethods {
                 if(!checkIfUsedEmailBelongsToCurrentUser(updateUserDto)){
                 errors.rejectValue("email", "email.not.unique");
                 }
-            }
-        }
-    }
-
-    void checkIfUserInsertedPhoto(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            if (registerUserDto.getUserPhoto().getSize() == 0) {
-                errors.rejectValue("userPhoto", "photo.not.inserted");
             }
         }
     }

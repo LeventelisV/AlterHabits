@@ -49,7 +49,7 @@ public class HomeController {
     public String showQuiz() {
         return "quiz";
     }
-
+    
     @GetMapping("quiz/answers")
     @ResponseBody
     public String showQuizAnswers(
@@ -85,5 +85,15 @@ public class HomeController {
     @RequestMapping(value = "photo", method = { RequestMethod.GET, RequestMethod.POST })
     public String showPhoto(){
         return "profilephoto";
+    }
+    
+    @GetMapping("preregisterform")
+    public String showRegisterForm() {
+        return "registerform";
+    }
+    
+    @GetMapping("lalaform")
+    public String showLala(){
+        return "lalaform";
     }
 }

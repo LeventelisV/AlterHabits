@@ -43,7 +43,7 @@ public class MyUserServiceImplementation implements MyUserServiceInterface {
 
     private List<? extends GrantedAuthority> mapRoleToAuthorities(Role role) {
         List<GrantedAuthority> authorities = new ArrayList();
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRole());
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+role.getRole());
             authorities.add(authority);
         return authorities;
     }

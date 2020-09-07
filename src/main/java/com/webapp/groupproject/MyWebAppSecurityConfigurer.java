@@ -80,6 +80,7 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(myUserServiceInterface);
         auth.setPasswordEncoder(passwordEncoder());
+        
         return auth;
     }
 

@@ -50,6 +50,9 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private MyUser userId;
+    @JoinColumn(name="activity_id",referencedColumnName="activity_id")
+    @ManyToOne(optional=false)
+    private Activity activityId;
 
     public Reservation() {
     }

@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webapp.groupproject.controllers;
-
-import org.springframework.stereotype.Controller;
+package com.webapp.groupproject.models;
 
 /**
  *
  * @author vaggelis
  */
-
-@Controller
-public class PaypalController {
-    
+public class ShopActivityDto {
+ //   private 
 }

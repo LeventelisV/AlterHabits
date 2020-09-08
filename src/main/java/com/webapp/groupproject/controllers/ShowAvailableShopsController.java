@@ -36,12 +36,13 @@ public class ShowAvailableShopsController {
   
 
     @GetMapping("/shops") 
-    public List<ShopDto> showAllShops() {
+    public List<Shop > showAllShops() {
         List<Shop> shops = new ArrayList();
         shops.addAll(shopServiceInterface.findShops());
      //   DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
     //   MyUser u= (MyUser) auth.getUserCache();
-        return PersistenceUtils.fillShopDto(shops);
+    
+        return shops;
 
     }
 

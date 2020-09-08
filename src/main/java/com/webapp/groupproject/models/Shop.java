@@ -5,6 +5,9 @@
  */
 package com.webapp.groupproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,6 +81,7 @@ public class Shop implements Serializable {
             inverseJoinColumns = {
                 @JoinColumn(name = "activity_id")})
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Activity> activities = new ArrayList<Activity>();
 
     public Shop() {
@@ -181,6 +185,7 @@ public class Shop implements Serializable {
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<ShopSubscriptionAccess> getShopSubscriptionAccessCollection() {
         return shopSubscriptionAccessCollection;
     }

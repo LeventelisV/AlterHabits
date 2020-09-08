@@ -46,9 +46,9 @@ public class ShopSubscriptionAccess implements Serializable {
     @JoinColumn(name = "shop_id", referencedColumnName = "shop_id")
     @ManyToOne(optional = false)
     private Shop shopId;
-    @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
-    private Subscription subscriptionId;
+    private Role roleId;
 
     public ShopSubscriptionAccess() {
     }
@@ -86,12 +86,12 @@ public class ShopSubscriptionAccess implements Serializable {
         this.shopId = shopId;
     }
 
-    public Subscription getSubscriptionId() {
-        return subscriptionId;
+    public Role getSubscriptionId() {
+        return roleId;
     }
 
-    public void setSubscriptionId(Subscription subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public void setSubscriptionId(Role roleId) {
+        this.roleId = roleId;
     }
 
     @Override

@@ -69,7 +69,9 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/shops").permitAll()
                 .antMatchers("/api/test/**").permitAll()
+                .antMatchers("/shops").permitAll()
                 .anyRequest().authenticated();
         
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

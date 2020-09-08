@@ -20,10 +20,12 @@ public class ShopServiceImplementation implements ShopServiceInterface{
     @Autowired
     ShopsRepository shopRepository;
     
+    @Override
     public List<Shop> findShops(){
         return shopRepository.findAll();
     }
     
+    @Override
     public List<Shop> findByActivitiesId(int id){
         return shopRepository.findAll();
     }

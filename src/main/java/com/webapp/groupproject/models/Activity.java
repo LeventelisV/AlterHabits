@@ -5,7 +5,9 @@
  */
 package com.webapp.groupproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +56,7 @@ public class Activity implements Serializable {
     @Column(name = "activity_id")
     private Integer activityId;
     @ManyToMany(mappedBy = "activities")
-    @JsonIgnore
+    @JsonBackReference
     private List<Shop> shops = new ArrayList<Shop>();
 
     public void setShops(List<Shop> shops) {

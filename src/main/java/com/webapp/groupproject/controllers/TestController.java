@@ -5,6 +5,12 @@
  */
 package com.webapp.groupproject.controllers;
 
+import com.webapp.groupproject.models.MyUser;
+import com.webapp.groupproject.models.Shop;
+import com.webapp.groupproject.repositories.MyUserRepository;
+import com.webapp.groupproject.repositories.ShopsRepository;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
+    
+    @Autowired
+    MyUserRepository mur;
 
+    @Autowired
+    ShopsRepository sr;
+    
     @GetMapping("/all")
     public String allAccess() {
         return "Public Content.";
@@ -41,4 +53,14 @@ public class TestController {
     public String adminAccess() {
         return "Admin Content.";
     }
+    
+//    @GetMapping("/getusers")
+//    public List<MyUser> returnUsers(){
+//        return mur.findAll();
+//    }
+//    
+//    @GetMapping("/getshops")
+//    public List<Shop> returnShops(){
+//        return sr.findAll();
+//    }
 }

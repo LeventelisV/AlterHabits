@@ -6,6 +6,7 @@
 package com.webapp.groupproject.services;
 
 import com.webapp.groupproject.models.Reservation;
+import java.util.List;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface ReservationServiceInterface {
     
     
     public int showReservationsOfAUserToAShop(int userId,int ShopId);
+    
+   public List<Reservation> showReservationsOfAUser(int userId);
 }

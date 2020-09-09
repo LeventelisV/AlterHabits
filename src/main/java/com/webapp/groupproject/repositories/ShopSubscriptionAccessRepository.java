@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author vaggelis
  */
-@Repository
+ 
 public interface ShopSubscriptionAccessRepository extends JpaRepository<ShopSubscriptionAccess,Integer>{
     
    @Query(

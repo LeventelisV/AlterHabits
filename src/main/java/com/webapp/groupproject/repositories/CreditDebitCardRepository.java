@@ -13,9 +13,12 @@ import org.springframework.stereotype.Repository;
  *
  * @author alexk
  */
-@Repository
+
+ 
 public interface CreditDebitCardRepository extends JpaRepository<CreditDebitCard, Integer>{
     
     public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
+    
+    public boolean existsByCreditDebitCardNumber(String creditDebitCardNumber);
     
 }

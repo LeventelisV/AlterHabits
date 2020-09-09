@@ -17,4 +17,8 @@ public interface CreditDebitCardServiceInterface {
     
     public CreditDebitCard findByCreditDebitCardNumber(String creditDebitCardNumber);
     
+    public boolean checkIfCreditDebitCardNumberExists(String creditDebitCardNumber);
+    
+    public CreditDebitCard findByCreditDebitCardId(Integer creditDebitCardId);
+    
 }

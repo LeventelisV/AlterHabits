@@ -9,18 +9,15 @@ package com.webapp.groupproject.models;
  *
  * @author vaggelis
  */
+import com.webapp.groupproject.annotations.ImageFileConstraint;
+import com.webapp.groupproject.annotations.ImageSizeConstraint;
 import com.webapp.groupproject.interfaces.UserDto;
-import java.time.LocalDate;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -28,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
  * @author vaggelis
  */
 public class RegisterUserDto implements UserDto{
-// TODO ANNOTATIONS FOR VALIDATE
 
     @NotEmpty(message = "Name can't be empty!")
     @Pattern(regexp = "^[A-Za-z]*$", message = "Invalid input for name. Name must contain only letters!")
@@ -41,33 +37,7 @@ public class RegisterUserDto implements UserDto{
     private String surname;
     private String gender;
     private String dateOfBirth;
-
-//    @NotEmpty(message = "Address is mandatory!")
-//    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid input for address. Address must contain only letters!")
-//    @Size(min = 1, max = 100, message = "Address can have 100 characters max!")
-//    private String address;
-//    
-//    @NotEmpty(message = "Address number is mandatory!")
-//    @Pattern(regexp = "[0-9]+", message = "Only numbers allowed on this field!")
-//    @Size(min = 1, max = 1000, message = "Only address numbers eligible are between 1 and 1000!")
-//    private String addressNumber;
-//    
-//    @NotEmpty(message = "City is mandatory!")
-//    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid input for city. City must contain only letters!")
-//    @Size(min = 1, max = 80, message = "Address can have 80 characters max!")
-//    private String city;
-//    @NotEmpty(message = "State is mandatory!")
-//    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid input for state. State must contain only letters!")
-//    @Size(min = 1, max = 80, message = "State can have 80 characters max!")
-//    private String state;
-//    @NotEmpty(message = "Country is mandatory!")
-//    @Pattern(regexp="^[A-Za-z]*$",message = "Invalid input for country. Country must contain only letters!")
-//    @Size(min = 1, max = 80, message = "Country can have 80 characters max!")
-//    private String country;
-//    @NotEmpty(message = "Postal code is mandatory!")
-//    @Pattern(regexp = "[0-9]+", message = "Only numbers allowed on this field!")
-//    @Size(min = 10000, max = 99999, message = "Postal code must consist of 5 numbers!")
-//    private String postalCode;
+    
     @Email(message = "Must be a well-formed email address!")
     @NotEmpty(message = "Email is mandatory!")
     @Size(min = 1, max = 200, message = "Email can't be more than 200 characters!")
@@ -114,30 +84,9 @@ public class RegisterUserDto implements UserDto{
     @NotEmpty(message = "Please enter the expiration year of your card!")
     @Pattern(regexp = "^20[0-9]{2}$", message = "Enter a valid 4 digit value starting with 20__ (e.g. 2025)")
     private String creditDebitCardExpYear;
-
-    private MultipartFile userPhoto;
     
     public RegisterUserDto() {
     }
-
-//    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String address, String addressNumber, String city, String state, String country, String postalCode, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword) {
-//        this.name = name;
-//        this.surname = surname;
-//        this.gender = gender;
-//        this.dateOfBirth = dateOfBirth;
-//        this.address = address;
-//        this.addressNumber = addressNumber;
-//        this.city = city;
-//        this.state = state;
-//        this.country = country;
-//        this.postalCode = postalCode;
-//        this.email = email;
-//        this.phoneNumber = phoneNumber;
-//        this.mobileNumber = mobileNumber;
-//        this.username = username;
-//        this.password = password;
-//        this.matchingPassword = matchingPassword;
-//    }
 
     public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword, String role, String creditDebitCardNumber, String creditDebitCardName, String creditDebitCardExpMonth, String creditDebitCardExpYear) {
         this.name = name;
@@ -156,26 +105,6 @@ public class RegisterUserDto implements UserDto{
         this.creditDebitCardExpMonth = creditDebitCardExpMonth;
         this.creditDebitCardExpYear = creditDebitCardExpYear;
     }
-   
-
-//    public RegisterUserDto(String name, String surname, String gender, String dateOfBirth, String address, String addressNumber, String city, String state, String country, String postalCode, String email, String phoneNumber, String mobileNumber, String username, String password, String matchingPassword) {
-//        this.name = name;
-//        this.surname = surname;
-//        this.gender = gender;
-//        this.dateOfBirth = dateOfBirth;
-//        this.address = address;
-//        this.addressNumber = addressNumber;
-//        this.city = city;
-//        this.state = state;
-//        this.country = country;
-//        this.postalCode = postalCode;
-//        this.email = email;
-//        this.phoneNumber = phoneNumber;
-//        this.mobileNumber = mobileNumber;
-//        this.username = username;
-//        this.password = password;
-//        this.matchingPassword = matchingPassword;
-//    }
 
     public String getName() {
         return name;
@@ -192,14 +121,7 @@ public class RegisterUserDto implements UserDto{
     public String getDateOfBirth() {
         return dateOfBirth;
     }
-
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public String getAddressNumber() {
-//        return addressNumber;
-//    }
+    
     public void setMatchingPassword(String matchingPassword) {
         this.matchingPassword = matchingPassword;
     }
@@ -207,22 +129,7 @@ public class RegisterUserDto implements UserDto{
     public String getMatchingPassword() {
         return matchingPassword;
     }
-
-//    public String getCity() {
-//        return city;
-//    }
-//
-//    public String getState() {
-//        return state;
-//    }
-//
-//    public String getCountry() {
-//        return country;
-//    }
-//
-//    public String getPostalCode() {
-//        return postalCode;
-//    }
+    
     public String getEmail() {
         return email;
     }
@@ -258,30 +165,7 @@ public class RegisterUserDto implements UserDto{
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
-//
-//    public void setAddressNumber(String addressNumber) {
-//        this.addressNumber = addressNumber;
-//    }
-//
-//    public void setCity(String city) {
-//        this.city = city;
-//    }
-//
-//    public void setState(String state) {
-//        this.state = state;
-//    }
-//
-//    public void setCountry(String country) {
-//        this.country = country;
-//    }
-//
-//    public void setPostalCode(String postalCode) {
-//        this.postalCode = postalCode;
-//    }
+    
     public void setEmail(String email) {
         this.email = email;
     }
@@ -340,13 +224,5 @@ public class RegisterUserDto implements UserDto{
 
     public void setCreditDebitCardExpYear(String creditDebitCardExpYear) {
         this.creditDebitCardExpYear = creditDebitCardExpYear;
-    }
-
-    public MultipartFile getUserPhoto() {
-        return userPhoto;
-    }
-
-    public void setUserPhoto(MultipartFile userPhoto) {
-        this.userPhoto = userPhoto;
     }
 }

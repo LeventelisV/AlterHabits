@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author vaggelis
  */
-@Repository
+ 
 public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     
     public Activity findById(int id);

@@ -35,13 +35,9 @@ public class ShowAvailableShopsController {
     
   
 
-    @GetMapping("/shops") 
-    public List<Shop > showAllShops() {
-        List<Shop> shops = new ArrayList();
-        shops.addAll(shopServiceInterface.findShops());
-     //   DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-    //   MyUser u= (MyUser) auth.getUserCache();
-    
+     @GetMapping("/shops") 
+    public List<Shop> showAllShops() {
+        List<Shop> shops = shopServiceInterface.findShops();
         return shops;
 
     }

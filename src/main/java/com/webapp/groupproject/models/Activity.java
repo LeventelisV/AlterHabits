@@ -59,6 +59,7 @@ public class Activity implements Serializable {
     @JsonBackReference
      private List<Shop> shops = new ArrayList<Shop>();
 
+
     public void setShops(List<Shop> shops) {
         this.shops = shops;
     }

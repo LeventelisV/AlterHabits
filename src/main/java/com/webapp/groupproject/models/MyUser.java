@@ -5,6 +5,9 @@
  */
 package com.webapp.groupproject.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,10 +65,13 @@ public class MyUser implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
+    
+    @JsonManagedReference
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Role roleId;
     
+    @JsonIgnore
     @JoinTable(name = "user_credit_debit_card",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")}, 
             inverseJoinColumns = {@JoinColumn(name = "credit_debit_card_id", referencedColumnName = "credit_debit_card_id")})

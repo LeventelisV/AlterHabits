@@ -46,7 +46,7 @@ public class Reservation implements Serializable {
     private Date reservationDate;
     @JoinColumn(name = "SHOP_id", referencedColumnName = "shop_id")
     @ManyToOne(optional = false)
-    private Shop sHOPid;
+    private Shop shopId;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private MyUser userId;
@@ -60,7 +60,7 @@ public class Reservation implements Serializable {
     public Reservation(Integer reservationId, Date reservationDate, Shop sHOPid, MyUser userId) {
         this.reservationId = reservationId;
         this.reservationDate = reservationDate;
-        this.sHOPid = sHOPid;
+        this.shopId = shopId;
         this.userId = userId;
     }
 
@@ -85,11 +85,11 @@ public class Reservation implements Serializable {
     }
 
     public Shop getSHOPid() {
-        return sHOPid;
+        return shopId;
     }
 
     public void setSHOPid(Shop sHOPid) {
-        this.sHOPid = sHOPid;
+        this.shopId = sHOPid;
     }
 
     public MyUser getUserId() {

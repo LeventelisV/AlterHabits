@@ -52,8 +52,6 @@ public class Role implements Serializable {
     private Integer roleId;
     
     @Column(name="available_appointments")
-    @Basic(optional = false)
-    @NotNull
     private Integer availableAppointments;
     
     @JsonBackReference
@@ -63,17 +61,14 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    public Role(String role, Integer roleId, Integer availableAppointments) {
-        this.role = role;
+    public Role(Integer roleId) {
         this.roleId = roleId;
-        this.availableAppointments = availableAppointments;
     }
 
-    public Integer getAvailableAppointments() {
-        return availableAppointments;
+    public Role(Integer roleId, String role) {
+        this.roleId = roleId;
+        this.role = role;
     }
-
- 
 
     public Integer getRoleId() {
         return roleId;

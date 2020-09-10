@@ -6,6 +6,7 @@
 package com.webapp.groupproject.utils;
 
 import com.webapp.groupproject.models.MyUser;
+import com.webapp.groupproject.models.Role;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.services.ReservationServiceInterface;
 
@@ -35,10 +36,21 @@ public   class BookingUtils {
         return myUserServiceInterface.findByUsername(loggedInUser);
     }
 
-//    public boolean checkIfAUserCanMakeAReservation(int userId, int shopId, int subscriprionId) {
-//        int numberOfPreviousReservatios = reservationServiceInterface.showReservationsOfAUserToAShop(userId, shopId);
-//      //  int maxDeservedVisits = shopSubscriptionAccessServiceInterface.findMaxDeservedVisits(subscriprionId, shopId);
-//        
-//        return (numberOfPreviousReservatios < maxDeservedVisits) ;
-//    }
+    public boolean checkIfAUserCanMakeAReservation(int userId,Role role) {
+        int numberOfPreviousReservations = reservationServiceInterface.showNumberOfReservationsOfAUser(userId);
+        int availableAppointments=role.getAvailableAppointments();
+
+        
+        return (numberOfPreviousReservations < availableAppointments ) ;
+    }
+    
+    
+    public int showNumberOfRemainingAppointments(int userId,Role role) {
+        
+        int numberOfPreviousReservations = reservationServiceInterface.showNumberOfReservationsOfAUser(userId);
+        int availableAppointments=role.getAvailableAppointments();
+        
+        
+        return ( availableAppointments-numberOfPreviousReservations  ) ;
+    }
 }

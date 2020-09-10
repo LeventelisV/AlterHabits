@@ -54,8 +54,7 @@ public class Reservation implements Serializable {
     @ManyToOne(optional=false)
     private Activity activityId;
 
-    public Reservation() {
-    }
+   
 
     public Reservation(Integer reservationId, Date reservationDate, Shop sHOPid, MyUser userId) {
         this.reservationId = reservationId;

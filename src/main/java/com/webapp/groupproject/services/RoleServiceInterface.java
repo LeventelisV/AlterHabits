@@ -15,4 +15,5 @@ public interface RoleServiceInterface {
     
     public Role findByRoleName (String roleName);
     
+     public Role findByRoleId(int roleId);
 }

@@ -7,6 +7,7 @@ package com.webapp.groupproject.services;
 
 import com.webapp.groupproject.models.Reservation;
 import com.webapp.groupproject.repositories.ReservationRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,11 @@ public class ReservationServiceImplementation implements ReservationServiceInter
     @Override
     public int showReservationsOfAUserToAShop(int userId, int ShopId) {
        return reservationRepository.showReservationsOfAUserToAShop(userId, ShopId);
+    }
+
+    @Override
+    public List<Reservation> showReservationsOfAUser(int userId) {
+        return reservationRepository.showReservationsOfAUser(userId);
     }
     
 }

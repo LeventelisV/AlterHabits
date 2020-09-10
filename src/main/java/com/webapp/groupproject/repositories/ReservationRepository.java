@@ -6,6 +6,7 @@
 package com.webapp.groupproject.repositories;
 
 import com.webapp.groupproject.models.Reservation;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,4 +20,12 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
     value="Select count(*) from reservation r where r.user_id=?1 and r.shop_id=?2",nativeQuery=true)
     public int showReservationsOfAUserToAShop(int userId,int shopId);
     
+   @Query(
+   value="Select * from reservation r where where r.user_id=?1",nativeQuery=true)
+   public List<Reservation> showReservationsOfAUser(int userId);
+       
+       
+   
+   
+   
 }

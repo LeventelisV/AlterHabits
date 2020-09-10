@@ -57,9 +57,6 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "SHOP_PHOTO", unique = true)
     private String shopPhoto;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shopId")
-    private Collection<ShopSubscriptionAccess> shopSubscriptionAccessCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shopId")
     private Collection<Reservation> reservationCollection;
     @NotNull
@@ -77,7 +74,7 @@ public class Shop implements Serializable {
     @Basic(optional = false)
     @Column(name = "shop_id")
     private Integer shopId;
-    
+
     @JoinTable(name = "shops_activities", joinColumns = {
         @JoinColumn(name = "shop_id")},
             inverseJoinColumns = {
@@ -186,14 +183,6 @@ public class Shop implements Serializable {
         this.latitude = latitude;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public Collection<ShopSubscriptionAccess> getShopSubscriptionAccessCollection() {
-        return shopSubscriptionAccessCollection;
-    }
 
-    public void setShopSubscriptionAccessCollection(Collection<ShopSubscriptionAccess> shopSubscriptionAccessCollection) {
-        this.shopSubscriptionAccessCollection = shopSubscriptionAccessCollection;
-    }
 
 }

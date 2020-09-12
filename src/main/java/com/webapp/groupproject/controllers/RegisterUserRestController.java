@@ -11,14 +11,17 @@ import com.webapp.groupproject.models.Lala;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
 import com.webapp.groupproject.models.Role;
+import com.webapp.groupproject.models.UserAppointments;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.models.UserPersonalInfo;
 import com.webapp.groupproject.repositories.MyUserRepository;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.services.RoleServiceInterface;
+import com.webapp.groupproject.services.UserAppointmentsServiceInterface;
 import com.webapp.groupproject.services.UserContactInfoServiceInterface;
 import com.webapp.groupproject.services.UserPersonalInfoServiceInterface;
+import com.webapp.groupproject.utils.BookingUtils;
 import com.webapp.groupproject.utils.PersistenceUtils;
 import com.webapp.groupproject.validators.RegisterUserValidator;
 import java.io.File;
@@ -72,6 +75,12 @@ public class RegisterUserRestController {
     @Autowired
     MyUserRepository myUserRepository;
 
+    @Autowired
+    BookingUtils bookingUtils;
+    
+    @Autowired
+    UserAppointmentsServiceInterface userAppointmentsServiceInterface;
+    
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.addValidators(registerUserValidator);
@@ -91,7 +100,13 @@ public class RegisterUserRestController {
 
         //take the userId from the database
         MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
-          
+         
+        //give the appointments to the inserted userr
+        UserAppointments userAppointments=new UserAppointments(null,
+              insertedUser,  bookingUtils.showInitialAppointments(insertedUser)
+        );
+        userAppointmentsServiceInterface.giveTheInitialAppointments(userAppointments);
+        
         CreditDebitCard insertedCreditDebitCard;
         
         if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(registerUserDto.getCreditDebitCardNumber())) {

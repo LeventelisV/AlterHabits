@@ -36,15 +36,15 @@ public   class BookingUtils {
         return myUserServiceInterface.findByUsername(loggedInUser);
     }
 
-//    public boolean checkIfAUserCanMakeAReservation(int userId,Role role) {
+//      public boolean checkIfAUserCanMakeAReservation(int userId,Role role) {
 //        int numberOfPreviousReservations = reservationServiceInterface.showNumberOfReservationsOfAUser(userId);
 //        int availableAppointments=role.getAvailableAppointments();
 //
 //        
 //        return (numberOfPreviousReservations < availableAppointments ) ;
 //    }
-    
-    
+//    
+//    
 //    public int showNumberOfRemainingAppointments(int userId,Role role) {
 //        
 //        int numberOfPreviousReservations = reservationServiceInterface.showNumberOfReservationsOfAUser(userId);
@@ -53,4 +53,19 @@ public   class BookingUtils {
 //        
 //        return ( availableAppointments-numberOfPreviousReservations  ) ;
 //    }
+    
+    public int showInitialAppointments(MyUser user){
+       String role=user.getRoleId().getRole();
+       int appointments;
+       if (role.equals("ROLE_ELIT"))
+           appointments=12;
+       else if(role.equals("ROLE_PREMIOUM"))
+           appointments=8;
+       else if (role.equals("ROLE_USER"))
+           appointments=4;
+       else 
+           appointments=0;
+           
+      return appointments;  
+    }
 }

@@ -51,8 +51,7 @@ public class Role implements Serializable {
     @Column(name = "role_id")
     private Integer roleId;
     
-    @Column(name="available_appointments")
-    private Integer availableAppointments;
+    
     
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")

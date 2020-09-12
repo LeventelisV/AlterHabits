@@ -7,6 +7,7 @@ package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.Reservation;
+import com.webapp.groupproject.services.UserAppointmentsServiceInterface;
 import com.webapp.groupproject.utils.BookingUtils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,13 @@ public class ShowRemainingNumberOfAppointmentsController {
     @Autowired
     BookingUtils bookingUtils;
 
+    @Autowired
+    UserAppointmentsServiceInterface userAppointmentsServiceInterface;
+
     @GetMapping("/showRemainingAppointments")
     public int showRemainingAppointments() {
         MyUser myUser = bookingUtils.takeTheLoggedInUser();
-        return bookingUtils.showNumberOfRemainingAppointments(myUser.getUserId(), myUser.getRoleId());
+        return  userAppointmentsServiceInterface.checkAvailableAppointmentsOfAUser(myUser.getUserId());
 
     }
 

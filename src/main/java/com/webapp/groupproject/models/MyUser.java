@@ -56,6 +56,8 @@ public class MyUser implements Serializable {
     @Column(name = "user_password")
     private String userPassword;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<UserAppointments> userAppointmentsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Reservation> reservationCollection;
    
 
@@ -155,22 +157,6 @@ public class MyUser implements Serializable {
    
   
 
-//    @XmlTransient
-//    public Collection<Reservation> getReservationCollection() {
-//        return reservationCollection;
-//    }
-//
-//    public void setReservationCollection(Collection<Reservation> reservationCollection) {
-//        this.reservationCollection = reservationCollection;
-//    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
   
 
@@ -181,6 +167,26 @@ public class MyUser implements Serializable {
 
     public void setReservationCollection(Collection<Reservation> reservationCollection) {
         this.reservationCollection = reservationCollection;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+   
+    
+
+    @XmlTransient
+    public Collection<UserAppointments> getUserAppointmentsCollection() {
+        return userAppointmentsCollection;
+    }
+
+    public void setUserAppointmentsCollection(Collection<UserAppointments> userAppointmentsCollection) {
+        this.userAppointmentsCollection = userAppointmentsCollection;
     }
 
 

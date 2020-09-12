@@ -16,6 +16,11 @@ public class BookingDto {
     private String username;
     private String activityId;
 
+    public BookingDto() {
+    }
+    
+    
+
     public BookingDto(String reservationDate, String shopId, String username, String activityId) {
         this.reservationDate = reservationDate;
         this.shopId = shopId;

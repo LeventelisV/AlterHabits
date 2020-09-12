@@ -5,6 +5,7 @@
  */
 package com.webapp.groupproject.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -44,8 +45,9 @@ public class Reservation implements Serializable {
     @Column(name = "reservation_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date reservationDate;
-    @JoinColumn(name = "SHOP_id", referencedColumnName = "shop_id")
+    @JoinColumn(name = "shop_id", referencedColumnName = "shop_id")
     @ManyToOne(optional = false)
+    @JsonManagedReference 
     private Shop shopId;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
@@ -54,13 +56,17 @@ public class Reservation implements Serializable {
     @ManyToOne(optional=false)
     private Activity activityId;
 
+    public Reservation() {
+    }
+
    
 
-    public Reservation(Integer reservationId, Date reservationDate, Shop sHOPid, MyUser userId) {
-        this.reservationId = reservationId;
+    public Reservation( Date reservationDate, Shop shopId, MyUser userId,Activity activityId) {
+        
         this.reservationDate = reservationDate;
         this.shopId = shopId;
         this.userId = userId;
+        this.activityId=activityId;
     }
 
     public Reservation(Integer reservationId) {

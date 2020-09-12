@@ -11,9 +11,11 @@ import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.core.Authentication;
@@ -37,7 +39,10 @@ public class HelperMethods {
 
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+             DateFormat inputFormat = new SimpleDateFormat(
+                "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
+        date = inputFormat.parse(s);
+        System.out.println(date);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }

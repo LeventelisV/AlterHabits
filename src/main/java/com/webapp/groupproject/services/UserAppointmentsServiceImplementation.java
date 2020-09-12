@@ -9,11 +9,13 @@ import com.webapp.groupproject.models.UserAppointments;
 import com.webapp.groupproject.repositories.UserAppointmentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author vaggelis
  */
+@Transactional
 @Service
 public class UserAppointmentsServiceImplementation implements UserAppointmentsServiceInterface {
 

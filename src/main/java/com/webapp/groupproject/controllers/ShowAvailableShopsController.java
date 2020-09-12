@@ -35,7 +35,7 @@ public class ShowAvailableShopsController {
     
   
 
-    @GetMapping("/shopss") 
+    @GetMapping("/shops") 
     public List<Shop> showAllShops() {
         List<Shop> shops = shopServiceInterface.findShops();
         return shops;

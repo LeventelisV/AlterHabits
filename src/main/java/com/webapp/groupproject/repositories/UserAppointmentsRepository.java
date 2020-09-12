@@ -21,8 +21,6 @@ public interface UserAppointmentsRepository extends JpaRepository<UserAppointmen
 
     
     @Modifying
-    @Query(value = "update user_appointments\n" +
-"set available_appointments=available_appointments-1\n" +
-"where user_id=?1", nativeQuery = true)
+    @Query(value = "update user_appointments set available_appointments=available_appointments-1 where user_id=?1", nativeQuery = true)
     public void subtrackAvailableAppointmentsAfterReservation(int userId);
 }

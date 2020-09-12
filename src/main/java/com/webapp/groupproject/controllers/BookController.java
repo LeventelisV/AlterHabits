@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,9 +63,9 @@ public class BookController {
     UserAppointmentsServiceInterface userAppointmentsServiceInterface;
     
     
-    @Modifying
-    @Transactional
-    @GetMapping("/shops")
+    
+   // @PreAuthorize("hasRole('USER') or hasRole('PREMIUM') or hasRole('ADMIN')")
+    @GetMapping("/book")
     public String bookAppointment() { //@RequestBody BookingDto bookingDto
         //  MyUser myUser = bookingUtils.takeTheLoggedInUser();
         userAppointmentsServiceInterface.subtrackAvailableAppointmentsAfterReservation(2);

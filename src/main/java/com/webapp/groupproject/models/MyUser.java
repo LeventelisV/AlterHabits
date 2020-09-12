@@ -56,6 +56,7 @@ public class MyUser implements Serializable {
     @Column(name = "user_password")
     private String userPassword;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonManagedReference
     private Collection<Reservation> reservationCollection;
    
 

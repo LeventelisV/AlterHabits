@@ -51,10 +51,10 @@ public class Role implements Serializable {
     @Column(name = "role_id")
     private Integer roleId;
     
-    @Column(name="available_appointments")
-    @Basic(optional = false)
-    @NotNull
-    private Integer availableAppointments;
+//    @Column(name="available_appointments")
+//    @Basic(optional = false)
+//    @NotNull
+//    private Integer availableAppointments;
     
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
@@ -63,15 +63,15 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    public Role(String role, Integer roleId, Integer availableAppointments) {
+    public Role(String role, Integer roleId /*,Integer availableAppointments*/) {
         this.role = role;
         this.roleId = roleId;
-        this.availableAppointments = availableAppointments;
+//        this.availableAppointments = availableAppointments;
     }
 
-    public Integer getAvailableAppointments() {
-        return availableAppointments;
-    }
+//    public Integer getAvailableAppointments() {
+//        return availableAppointments;
+//    }
 
  
 

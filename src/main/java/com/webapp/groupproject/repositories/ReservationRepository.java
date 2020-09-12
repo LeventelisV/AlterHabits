@@ -25,7 +25,9 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
    public List<Reservation> showReservationsOfAUser(int userId);
        
        
-   
+   @Query(
+    value="Select count(*) from reservation r where r.user_id=?1",nativeQuery=true)
+    public int showNumberOfReservationsOfAUser(int userId);
    
    
 }

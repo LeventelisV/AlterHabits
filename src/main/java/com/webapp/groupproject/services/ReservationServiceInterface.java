@@ -21,4 +21,6 @@ public interface ReservationServiceInterface {
     public int showReservationsOfAUserToAShop(int userId,int ShopId);
     
    public List<Reservation> showReservationsOfAUser(int userId);
+   
+   public int showNumberOfReservationsOfAUser(int userId);
 }

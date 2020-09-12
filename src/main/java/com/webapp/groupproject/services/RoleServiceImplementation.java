@@ -26,5 +26,10 @@ public class RoleServiceImplementation implements RoleServiceInterface {
        return roleRepository.findByRole(roleName);
         
     }
+
+    @Override
+    public Role findByRoleId(int roleId) {
+     return   roleRepository.findByRoleId(roleId);
+    }
     
 }

@@ -38,5 +38,10 @@ public class ReservationServiceImplementation implements ReservationServiceInter
     public List<Reservation> showReservationsOfAUser(int userId) {
         return reservationRepository.showReservationsOfAUser(userId);
     }
+
+    @Override
+    public int showNumberOfReservationsOfAUser(int userId) {
+        return reservationRepository.showNumberOfReservationsOfAUser(userId);
+    }
     
 }

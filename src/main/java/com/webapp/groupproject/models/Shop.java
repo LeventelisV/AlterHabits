@@ -57,6 +57,7 @@ public class Shop implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "SHOP_PHOTO", unique = true)
+  //  @Transient
     private String shopPhoto;
     @OneToMany(fetch =FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
     @JsonBackReference

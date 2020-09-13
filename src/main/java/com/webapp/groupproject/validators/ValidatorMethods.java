@@ -69,7 +69,7 @@ public class ValidatorMethods {
 
     // check if user's date of birth format is ok
     boolean checkIfDateOfBirthFormatIsValid(UserDto userDto, Errors errors) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
         if (userDto instanceof RegisterUserDto) {
             RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
@@ -96,7 +96,7 @@ public class ValidatorMethods {
 
     // check if user is adult (user's age>=18)
     void checkIfUserAdult(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {
             RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
             try {
@@ -124,7 +124,7 @@ public class ValidatorMethods {
 
     // check if date given is extremely big
     void checkIfUserAlive(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {
             RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
             try {

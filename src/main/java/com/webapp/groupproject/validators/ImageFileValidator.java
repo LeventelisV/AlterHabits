@@ -6,7 +6,7 @@
 package com.webapp.groupproject.validators;
 
 import com.webapp.groupproject.annotations.ImageFileConstraint;
-import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
+import com.webapp.groupproject.utils.HelperMethods;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.io.FilenameUtils;
@@ -24,8 +24,7 @@ public class ImageFileValidator implements ConstraintValidator<ImageFileConstrai
 
     @Override
     public boolean isValid(String image, ConstraintValidatorContext cvc) {
-        ;
-            String extension = FilenameUtils.getExtension(BASE64DecodedMultipartFile.base64ToMultipart(image).getOriginalFilename());
+            String extension = FilenameUtils.getExtension(HelperMethods.convertBase64ToMultipart(image).getOriginalFilename());
             return extension.equals("jpg") || extension.equals("png");
         }
     }

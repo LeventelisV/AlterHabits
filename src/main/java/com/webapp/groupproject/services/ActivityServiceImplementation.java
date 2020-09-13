@@ -31,4 +31,9 @@ ActivityRepository activityRepository;
     public boolean findIfAnActivityExists(String activityName) {
         return activityRepository.findByActivityName(activityName)!=null;
     }
+
+     
+    public Activity findActivityByName(String activityName) {
+        return activityRepository.findByActivityName(activityName);
+    }
 }

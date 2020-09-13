@@ -29,29 +29,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author alexk
  */
-@Controller
+@RestController
 public class HomeController {
 
     @Autowired
     MyUserServiceInterface myUserServiceInterface;
     
-    @GetMapping("h")
-    public String home() {
-        return "newjsf";
-    }
-
-    @GetMapping("quiz")
-    public String showQuiz() {
-        return "quiz";
-    }
-    
-    @GetMapping("quiz/answers")
-    @ResponseBody
+    @GetMapping("/quiz/answers")
     public String showQuizAnswers(
             @RequestParam String answer1,
             @RequestParam String answer2,

@@ -59,8 +59,7 @@ public class Reservation implements Serializable {
     @ManyToOne(optional = false)
     private Activity activityId;
 
-    public Reservation() {
-    }
+   public Reservation(){}
 
     public Reservation(Date reservationDate, Shop shopId, MyUser userId, Activity activityId) {
 

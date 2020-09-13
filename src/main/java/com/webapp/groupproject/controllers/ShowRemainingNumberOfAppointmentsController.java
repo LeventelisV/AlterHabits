@@ -30,9 +30,8 @@ public class ShowRemainingNumberOfAppointmentsController {
 
     @GetMapping("/showRemainingAppointments")
     public int showRemainingAppointments() {
-       MyUser myUser = bookingUtils.takeTheLoggedInUser();
+        MyUser myUser = bookingUtils.takeTheLoggedInUser();
         return  userAppointmentsServiceInterface.checkAvailableAppointmentsOfAUser(myUser.getUserId());
-
     }
 
 }

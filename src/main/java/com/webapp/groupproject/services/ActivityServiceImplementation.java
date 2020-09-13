@@ -26,4 +26,9 @@ ActivityRepository activityRepository;
     public Activity findActivityById(int id) {
       return  activityRepository.findById(id);
     }
+
+    @Override
+    public boolean findIfAnActivityExists(String activityName) {
+        return activityRepository.findByActivityName(activityName)!=null;
+    }
 }

@@ -75,6 +75,7 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/quiz/**").permitAll()
                 .antMatchers("/book").permitAll()
+                .antMatchers("/show").permitAll()
                 .antMatchers("/showRemainingAppointments").permitAll()
                 .antMatchers("/showRemainingAppointments").permitAll()
                 .antMatchers("/showListOfTheWeekReservationsOfTheUser").permitAll()

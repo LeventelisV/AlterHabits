@@ -20,6 +20,10 @@ public interface ShopServiceInterface {
      public List<Shop> findByActivitiesId(int id);
      
      public Shop findByShopId(int id);
+     
+     public boolean findIfAShopNameDoesNotExists(String shopName);
+     
+     public Shop insertShop(Shop shop);
         
     
 }

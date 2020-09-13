@@ -73,7 +73,7 @@ public class BookController {
         //   BookingDto bookingDto = new BookingDto(date, shopId, myUser.getUserId().toString(), activityId);
         String result;
         Date reservationDate = HelperMethods.parseStringToDate(date);
-        Date reservationDate2 = HelperMethods.parseStringToDate("Tue Sep 08 2020 19:41:20 GMT+0300 (Eastern European Summer Time)");
+    //    Date reservationDate2 = HelperMethods.parseStringToDate("Tue Sep 08 2020 19:41:20 GMT+0300 (Eastern European Summer Time)");
         Shop shop = shopServiceInterface.findByShopId(Integer.parseInt(shopId));
         // MyUser user = myUserServiceInterface.findById(Integer.parseInt(myUser.getUserId()));
         Activity activity = activityServiceInterface.findActivityById(Integer.parseInt(activityId));

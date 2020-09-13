@@ -7,11 +7,17 @@ package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.services.ActivityServiceInterface;
 import com.webapp.groupproject.services.ShopServiceInterface;
+import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -19,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class BecomingPartnerController {
-    
+
     @Autowired
     ActivityServiceInterface activityServiceInterface;
-    
+
     @Autowired
     ShopServiceInterface shopServiceInterface;
 
@@ -31,20 +37,26 @@ public class BecomingPartnerController {
             @RequestParam String longitude,
             @RequestParam String shopPhoto,
             @RequestParam String latitude) {
-        if((activityServiceInterface.findIfAnActivityExists(activity))&&(shopServiceInterface.findIfAShopNameDoesNotExists(shopName))){
-          return "forward:insertPartner";  
-        }
-        else{
+        if ((activityServiceInterface.findIfAnActivityExists(activity)) && (shopServiceInterface.findIfAShopNameDoesNotExists(shopName))) {
+            return "forward:insertPartner";
+        } else {
             return "invalid name for the application";
         }
     }
 
-   
     @GetMapping("/insertPartner")
-    public boolean show(){
-        String shop="comrader";
-        return shopServiceInterface.findIfAShopNameDoesNotExists(shop);
-        
-        
+    public MultipartFile show() throws IOException {
+        String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";
+        byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+       
+
+        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(encodedString);
+        return f;
+
     }
-    }
+
+  
+
+}

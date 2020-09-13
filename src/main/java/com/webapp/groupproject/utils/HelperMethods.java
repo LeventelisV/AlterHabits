@@ -11,6 +11,8 @@ import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +20,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -49,5 +54,27 @@ public class HelperMethods {
         return date;
 
     }
+    
+//    public static MultipartFile  decodeABase64String(String base64){
+//        try {
+//            String[] baseStrs = base64.split(",");
+// 
+//            BASE64Decoder decoder = new BASE64Decoder();
+//            byte[] b = new byte[0];
+//            b = decoder.decodeBuffer(baseStrs[1]);
+// 
+//            for (int i = 0; i < b.length; ++i) {
+//                if (b[i] < 0) {
+//                    b[i] += 256;
+//                }
+//            }
+// 
+//            return new BASE64DecodedMultipartFile(b, baseStrs[0]);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
+ 
 }

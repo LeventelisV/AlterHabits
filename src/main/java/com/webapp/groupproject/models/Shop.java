@@ -16,6 +16,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,8 +58,8 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "SHOP_PHOTO", unique = true)
     private String shopPhoto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shopId")
-    @JsonBackReference  
+    @OneToMany(fetch =FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
+    @JsonBackReference
     private Collection<Reservation> reservationCollection;
     @NotNull
     @Size(min = 1, max = 50)
@@ -183,7 +184,5 @@ public class Shop implements Serializable {
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-
-
 
 }

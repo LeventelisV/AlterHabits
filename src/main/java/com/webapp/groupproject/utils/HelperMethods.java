@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -44,10 +45,10 @@ public class HelperMethods {
 
         Date date = null;
         try {
-             DateFormat inputFormat = new SimpleDateFormat(
-                "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
-        date = inputFormat.parse(s);
-        System.out.println(date);
+            DateFormat inputFormat = new SimpleDateFormat(
+                    "E MMM dd yyyy HH:mm:ss 'GMT'z", Locale.ENGLISH);
+            date = inputFormat.parse(s);
+            System.out.println(date);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -76,5 +77,41 @@ public class HelperMethods {
 //        }
 //    }
 
- 
+    public static MultipartFile convertBase64ToMultipart(String encodedString) {
+
+        byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
+        String stringBase64Decoded = new String(byteBase64Decoded);
+
+        return BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+
+    }
+
+    public static String manipulateDateString(String requestString) {
+        String[] parts = requestString.split("GMT ", 2);
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556-42
+        return (part1 + "GMT+" + part2);
+
+    }
+
+//    public static MultipartFile  decodeABase64String(String base64){
+//        try {
+//            String[] baseStrs = base64.split(",");
+// 
+//            BASE64Decoder decoder = new BASE64Decoder();
+//            byte[] b = new byte[0];
+//            b = decoder.decodeBuffer(baseStrs[1]);
+// 
+//            for (int i = 0; i < b.length; ++i) {
+//                if (b[i] < 0) {
+//                    b[i] += 256;
+//                }
+//            }
+// 
+//            return new BASE64DecodedMultipartFile(b, baseStrs[0]);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 }

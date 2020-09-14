@@ -105,6 +105,13 @@ public class Shop implements Serializable {
         this.activities = activities;
     }
 
+    public Shop(String shopName, List<Activity> activities, String longitude, String latitude) {
+        this.shopName = shopName;
+        this.activities = activities;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Integer getShopId() {
         return shopId;
     }

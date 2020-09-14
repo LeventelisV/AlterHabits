@@ -21,6 +21,6 @@ public interface ActivityServiceInterface {
     
     public boolean findIfAnActivityExists(String activityName);
         
-     
+    public Activity findActivityByName(String activityName); 
     
 }

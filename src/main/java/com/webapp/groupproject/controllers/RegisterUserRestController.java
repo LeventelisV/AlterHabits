@@ -102,7 +102,7 @@ public class RegisterUserRestController {
         MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
          
         //give the appointments to the inserted userr
-        UserAppointments userAppointments=new UserAppointments(null,
+        UserAppointments userAppointments=new UserAppointments(
               insertedUser,  bookingUtils.showInitialAppointments(insertedUser)
         );
         userAppointmentsServiceInterface.giveTheInitialAppointments(userAppointments);

@@ -59,6 +59,12 @@ public class UserAppointments implements Serializable {
         
     }
 
+    public UserAppointments( MyUser userId,int availableAppointments) {
+        
+        this.userId = userId;
+        this.availableAppointments = availableAppointments;
+    }
+
   
 
     public Integer getId() {

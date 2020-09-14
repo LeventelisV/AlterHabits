@@ -55,10 +55,9 @@ public class Activity implements Serializable {
     @Column(name = "activity_id")
     private Integer activityId;
     @ManyToMany(mappedBy = "activities")
-   // @JsonIgnore
+    // @JsonIgnore
     @JsonBackReference
-     private List<Shop> shops = new ArrayList<Shop>();
-
+    private List<Shop> shops = new ArrayList<Shop>();
 
     public void setShops(List<Shop> shops) {
         this.shops = shops;

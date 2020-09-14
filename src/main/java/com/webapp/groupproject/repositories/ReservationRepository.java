@@ -28,6 +28,12 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
    @Query(
     value="Select count(*) from reservation r where r.user_id=?1",nativeQuery=true)
     public int showNumberOfReservationsOfAUser(int userId);
+    
+    @Query(
+    value="SELECT * FROM reservation r WHERE r.user_id=?1 AND "
+            + "reservation_date BETWEEN NOW() "
+            + "AND ADDDATE(NOW(), INTERVAL 7 DAY) ",nativeQuery=true)
+    public List<Reservation> showWeeklyReservationsOfAUser(int userId);
    
    
 }

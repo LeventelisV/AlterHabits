@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface ActivityServiceInterface {
     
     public Activity findActivityById(int id);
+    
+    public boolean findIfAnActivityExists(String activityName);
         
      
     

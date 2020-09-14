@@ -18,4 +18,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>{
     
     public Activity findById(int id);
     
+    public Activity findByActivityName(String activityName);
+    
 }

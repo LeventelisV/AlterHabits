@@ -6,6 +6,7 @@
 package com.webapp.groupproject.validators;
 
 import com.webapp.groupproject.annotations.ImageSizeConstraint;
+import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,16 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author alexk
  */
-public class ImageSizeValidator implements ConstraintValidator<ImageSizeConstraint, MultipartFile> {
+public class ImageSizeValidator implements ConstraintValidator<ImageSizeConstraint, String> {
 
     @Override
     public void initialize(ImageSizeConstraint constraintAnnotation) {
     }
 
     @Override
-    public boolean isValid(MultipartFile image, ConstraintValidatorContext cvc) {
+    public boolean isValid(String image, ConstraintValidatorContext cvc) {
         
-            if (image.getSize() > 225443840) {
+            if (BASE64DecodedMultipartFile.base64ToMultipart(image).getSize() > 225443840) {
                 return false;
             }
             return true;

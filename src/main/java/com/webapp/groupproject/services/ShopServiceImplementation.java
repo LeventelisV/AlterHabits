@@ -34,5 +34,16 @@ public class ShopServiceImplementation implements ShopServiceInterface{
     public Shop findByShopId(int id) {
         return shopRepository.findById(id).get();
     }
+
+    @Override
+    public boolean findIfAShopNameDoesNotExists(String shopName) {
+        return shopRepository.findShopByShopName(shopName)==null;
+    }
+
+    @Override
+    public Shop insertShop(Shop shop) {
+        return shopRepository.save(shop);
+    }
+    
     
 }

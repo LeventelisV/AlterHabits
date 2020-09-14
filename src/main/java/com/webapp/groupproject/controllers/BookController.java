@@ -61,46 +61,51 @@ public class BookController {
 
     @Autowired
     UserAppointmentsServiceInterface userAppointmentsServiceInterface;
-    
-    
-    
-   // @PreAuthorize("hasRole('USER') or hasRole('PREMIUM') or hasRole('ADMIN')")
+
+    // @PreAuthorize("hasRole('USER') or hasRole('PREMIUM') or hasRole('ADMIN')")
     @GetMapping("/book")
-    public String bookAppointment() { //@RequestBody BookingDto bookingDto
-        //  MyUser myUser = bookingUtils.takeTheLoggedInUser();
-        userAppointmentsServiceInterface.subtrackAvailableAppointmentsAfterReservation(2);
-        BookingDto bookingDto = new BookingDto("Tue Sep 16 2020 19:41:20 GMT+0300 (Eastern European Summer Time)", "1", "2", "23");
+    public String bookAppointment(@RequestParam String shopId,
+            @RequestParam String activityId,
+            @RequestParam String date
+    ) { //@RequestBody BookingDto bookingDto
+        MyUser myUser = bookingUtils.takeTheLoggedInUser();
+
+        //   BookingDto bookingDto = new BookingDto(date, shopId, myUser.getUserId().toString(), activityId);
         String result;
-        Date reservationDate = HelperMethods.parseStringToDate(bookingDto.getReservationDate());
-        Shop shop = shopServiceInterface.findByShopId(Integer.parseInt(bookingDto.getShopId()));
-        MyUser user = myUserServiceInterface.findById(Integer.parseInt("2"));
-        Activity activity = activityServiceInterface.findActivityById(Integer.parseInt(bookingDto.getActivityId()));
+        Date reservationDate = HelperMethods.parseStringToDate(date);
+    //    Date reservationDate2 = HelperMethods.parseStringToDate("Tue Sep 08 2020 19:41:20 GMT+0300 (Eastern European Summer Time)");
+        Shop shop = shopServiceInterface.findByShopId(Integer.parseInt(shopId));
+        // MyUser user = myUserServiceInterface.findById(Integer.parseInt(myUser.getUserId()));
+        Activity activity = activityServiceInterface.findActivityById(Integer.parseInt(activityId));
         // if (myUser.getUsername().equals(bookingDto.getUsername())) {
         //     Role userRole = myUser.getRoleId();
-        if (userAppointmentsServiceInterface.checkAvailableAppointmentsOfAUser(2) > 0) {
+        if (userAppointmentsServiceInterface.checkAvailableAppointmentsOfAUser(myUser.getUserId()) > 0) {
             Reservation reservation = new Reservation(
                     reservationDate,
                     shop,
-                    user,
+                    myUser,
                     activity
             );
 
             reservationServiceInterface.insertReservation(reservation);
-            userAppointmentsServiceInterface.subtrackAvailableAppointmentsAfterReservation(2);
+            userAppointmentsServiceInterface.subtrackAvailableAppointmentsAfterReservation(myUser.getUserId());
             result = "reservation completed";
         } else {
             result = "you have no more appointments ";
+            //    }
+
         }
         return result;
-    }
 
+    }
+}
 //       
 //        int userId=myUser.getUserId();
 //        String message="";
 //        int subscriptionId=1;    //8a to svhsw otan er8ei to id apo ton client   
 //        int shopId = 3;//8a to svhsw otan er8ei to id apo ton client
 //        int activityId = 3;//8a to svhsw otan er8ei to id apo ton client
-    //      if(bookingUtils.checkIfAUserCanMakeAReservation(userId, shopId, subscriptionId)){
+//      if(bookingUtils.checkIfAUserCanMakeAReservation(userId, shopId, subscriptionId)){
 //        Shop shop = shopServiceInterface.findByShopId(shopId);
 //        Activity activity = activityServiceInterface.findActivityById(activityId);
 //        String sdate = "14-Jul-2011 12:52:00";
@@ -121,4 +126,4 @@ public class BookController {
 //
 //        return message;
 //    }
-}
+

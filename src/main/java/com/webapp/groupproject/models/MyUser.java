@@ -39,9 +39,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "users")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MyUser.findAll", query = "SELECT m FROM MyUser m"),
-    @NamedQuery(name = "MyUser.findByUserId", query = "SELECT m FROM MyUser m WHERE m.userId = :userId"),
-    @NamedQuery(name = "MyUser.findByUsername", query = "SELECT m FROM MyUser m WHERE m.username = :username"),
+    @NamedQuery(name = "MyUser.findAll", query = "SELECT m FROM MyUser m")
+    ,
+    @NamedQuery(name = "MyUser.findByUserId", query = "SELECT m FROM MyUser m WHERE m.userId = :userId")
+    ,
+    @NamedQuery(name = "MyUser.findByUsername", query = "SELECT m FROM MyUser m WHERE m.username = :username")
+    ,
     @NamedQuery(name = "MyUser.findByUserPassword", query = "SELECT m FROM MyUser m WHERE m.userPassword = :userPassword")})
 public class MyUser implements Serializable {
 
@@ -59,8 +62,8 @@ public class MyUser implements Serializable {
     @JsonManagedReference
     private Collection<UserAppointments> userAppointmentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonManagedReference
     private Collection<Reservation> reservationCollection;
-   
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,16 +71,18 @@ public class MyUser implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_id")
     private Integer userId;
-    
+
     @JsonManagedReference
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Role roleId;
-    
+
     @JsonIgnore
     @JoinTable(name = "user_credit_debit_card",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")}, 
-            inverseJoinColumns = {@JoinColumn(name = "credit_debit_card_id", referencedColumnName = "credit_debit_card_id")})
+            joinColumns = {
+                @JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "credit_debit_card_id", referencedColumnName = "credit_debit_card_id")})
     @ManyToMany(cascade = CascadeType.ALL)
     private Collection<CreditDebitCard> creditDebitCardCollection = new ArrayList();
 
@@ -95,7 +100,7 @@ public class MyUser implements Serializable {
         this.roleId = roleId;
         this.creditDebitCardCollection = creditDebitCardCollection;
     }
-    
+
     public Collection<CreditDebitCard> getCreditDebitCardCollection() {
         return creditDebitCardCollection;
     }
@@ -111,7 +116,6 @@ public class MyUser implements Serializable {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
-
 
     public String getUserPassword() {
         return userPassword;
@@ -154,13 +158,6 @@ public class MyUser implements Serializable {
         return "com.webapp.groupproject.models.MyUser[ userId=" + userId + " ]";
     }
 
-
-   
-  
-
-
-  
-
     @XmlTransient
     public Collection<Reservation> getReservationCollection() {
         return reservationCollection;
@@ -178,9 +175,6 @@ public class MyUser implements Serializable {
         this.username = username;
     }
 
-   
-    
-
     @XmlTransient
     public Collection<UserAppointments> getUserAppointmentsCollection() {
         return userAppointmentsCollection;
@@ -190,9 +184,4 @@ public class MyUser implements Serializable {
         this.userAppointmentsCollection = userAppointmentsCollection;
     }
 
-
- 
-
-   
-    
 }

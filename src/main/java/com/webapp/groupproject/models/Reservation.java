@@ -6,6 +6,7 @@
 package com.webapp.groupproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
@@ -54,24 +55,26 @@ public class Reservation implements Serializable {
     @ManyToOne(optional = false)
     @JsonBackReference
     private MyUser userId;
-    @JoinColumn(name="activity_id",referencedColumnName="activity_id")
-    @ManyToOne(optional=false)
+    @JoinColumn(name = "activity_id", referencedColumnName = "activity_id")
+    @ManyToOne(optional = false)
     private Activity activityId;
 
    public Reservation(){}
 
-   
+    public Reservation(Date reservationDate, Shop shopId, MyUser userId, Activity activityId) {
 
-    public Reservation( Date reservationDate, Shop shopId, MyUser userId,Activity activityId) {
-        
         this.reservationDate = reservationDate;
         this.shopId = shopId;
         this.userId = userId;
-        this.activityId=activityId;
+        this.activityId = activityId;
     }
 
     public Reservation(Integer reservationId) {
         this.reservationId = reservationId;
+    }
+
+    public Activity getActivityId() {
+        return activityId;
     }
 
     public Integer getReservationId() {
@@ -90,12 +93,12 @@ public class Reservation implements Serializable {
         this.reservationDate = reservationDate;
     }
 
-    public Shop getSHOPid() {
+    public Shop getShopId() {
         return shopId;
     }
 
-    public void setSHOPid(Shop sHOPid) {
-        this.shopId = sHOPid;
+    public void setShopId(Shop shopId) {
+        this.shopId = shopId;
     }
 
     public MyUser getUserId() {
@@ -130,5 +133,5 @@ public class Reservation implements Serializable {
     public String toString() {
         return "com.webapp.groupproject.models.Reservation[ reservationId=" + reservationId + " ]";
     }
-    
+
 }

@@ -23,6 +23,7 @@ public interface ShopsRepository extends JpaRepository<Shop, Integer>{
         
     
   
+  public Shop findShopByShopName(String shopName);
     
     
 }

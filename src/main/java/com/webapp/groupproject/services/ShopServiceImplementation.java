@@ -16,17 +16,18 @@ import org.springframework.stereotype.Service;
  * @author vaggelis
  */
 @Service
-public class ShopServiceImplementation implements ShopServiceInterface{
+public class ShopServiceImplementation implements ShopServiceInterface {
+
     @Autowired
     ShopsRepository shopRepository;
-    
+
     @Override
-    public List<Shop> findShops(){
+    public List<Shop> findShops() {
         return shopRepository.findAll();
     }
-    
+
     @Override
-    public List<Shop> findByActivitiesId(int id){
+    public List<Shop> findByActivitiesId(int id) {
         return shopRepository.findAll();
     }
 
@@ -37,13 +38,12 @@ public class ShopServiceImplementation implements ShopServiceInterface{
 
     @Override
     public boolean findIfAShopNameDoesNotExists(String shopName) {
-        return shopRepository.findShopByShopName(shopName)==null;
+        return shopRepository.findShopByShopName(shopName) == null;
     }
 
     @Override
     public Shop insertShop(Shop shop) {
         return shopRepository.save(shop);
     }
-    
-    
+
 }

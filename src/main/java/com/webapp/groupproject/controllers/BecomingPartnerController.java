@@ -8,12 +8,15 @@ package com.webapp.groupproject.controllers;
 import com.webapp.groupproject.models.Activity;
 import com.webapp.groupproject.models.Shop;
 import com.webapp.groupproject.services.ActivityServiceInterface;
+import com.webapp.groupproject.services.FileHandlingServiceInterface;
 import com.webapp.groupproject.services.ShopServiceInterface;
 import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
+import com.webapp.groupproject.utils.HelperMethods;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -39,6 +42,9 @@ public class BecomingPartnerController {
     @Autowired
     ShopServiceInterface shopServiceInterface;
 
+    @Autowired
+    FileHandlingServiceInterface fileHandlingServiceInterface;
+
     public String verifyFuturePartner(@RequestParam String shopName,
             @RequestParam String activity,
             @RequestParam String longitude,
@@ -53,53 +59,71 @@ public class BecomingPartnerController {
 
     @GetMapping("/insertPartner")
     public String insertNewPartner(@RequestParam String shopName,
-            @RequestParam List<String> activities,
+            @RequestParam List<String> stringActivities,
             @RequestParam String longitude,
             @RequestParam String shopPhoto,
             @RequestParam String latitude) {
-        List<Activity> act= new ArrayList();
-       for(String s : activities){
-     Activity a=  activityServiceInterface.findActivityByName(s);
-       }
-        
-      //  Shop shop=new Shop(shopName,activities,longitude,latitude)
-        
-        return "";
+        List<Activity> activities = new ArrayList();
+        for (String s : stringActivities) {
+            Activity a = activityServiceInterface.findActivityByName(s);
+            activities.add(a);
+
+        }
+
+        Shop shop = new Shop(shopName, activities, longitude, latitude);
+        Shop insertedShop = shopServiceInterface.insertShop(shop);
+        byte[] byteBase64Decoded = Base64.getDecoder().decode(shopPhoto);
+        String stringBase64Decoded = new String(byteBase64Decoded);
+        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+        fileHandlingServiceInterface.storeFileToDisk(f, insertedShop.getShopId() + ".jpg");
+//  Shop shop=new Shop(shopName,activities,longitude,latitude)
+        return " ";
     }
 
-    
-    
-    
-    
-    
-    
     @GetMapping("/insertPartner2")
     public void saveImage() throws IOException {
          String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";
-        byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
+        String newshop="C:\\Users\\vaggelis\\";
+        
+         byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
         String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
 
         byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
         String stringBase64Decoded = new String(byteBase64Decoded);
 
+        
+        HelperMethods.decodeABase64String(stringBase64Decoded);
+//        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+//       f.transferTo(new File("C:\\Users\\vaggelis\\dskjdksajdk.jpg"));
+//        
+//        HelperMethods.write(f, newshop);
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
-        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
-        
-        
-        String s="";
-        
-        
-        
-        
-        
-        
-        
-        
- //       String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";
 //        byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
 //        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+//
+//        byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
+//        String stringBase64Decoded = new String(byteBase64Decoded);
+//
+//        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+//         fileHandlingServiceInterface.storeFileToDisk(f, "adhjdha.jpg");
+//       
+//        HelperMethods.multipartFileToFile(f, newshop);
+//        
+//        f.transferTo(new File(newshop));
+//         
 
+        //       String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";
+//        byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
+//        String encodedString = Base64.getEncoder().encodeToString(fileContent);
 //        BufferedImage image = null;
 //        byte[] decodedBytes = Base64.getMimeDecoder().decode((shop).split(",")[1]);
 //
@@ -110,9 +134,9 @@ public class BecomingPartnerController {
 //        File outputfile = new File(("C:\\Users\\vaggelis\\kkk\\"));
 //
 //        ImageIO.write(image, "jpg", outputfile);
-
         // user.setPhotoUrl(signupdto.getPhotoname());
     }
+    
 
 }
 //    String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";

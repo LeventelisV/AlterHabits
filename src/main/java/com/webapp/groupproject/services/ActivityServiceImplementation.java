@@ -32,7 +32,7 @@ ActivityRepository activityRepository;
         return activityRepository.findByActivityName(activityName)!=null;
     }
 
-     
+     @Override
     public Activity findActivityByName(String activityName) {
         return activityRepository.findByActivityName(activityName);
     }

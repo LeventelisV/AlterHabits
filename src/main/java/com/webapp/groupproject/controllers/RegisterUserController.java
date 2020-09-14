@@ -122,7 +122,7 @@ package com.webapp.groupproject.controllers;
 //        UserPersonalInfo userPersonalInfo = PersistenceUtils.fillUserPersonalInfoProperties(registerUserDto, myuser);
 //        userPersonalServiceInterface.saveUserPersonalInfo(userPersonalInfo);
 //        
-//        registerUserDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+insertedUser.getUserId()+".jpg"));
+//         registerUserDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+insertedUser.getUserId()+".jpg"));
 //        
 //        return "demologin";
 //

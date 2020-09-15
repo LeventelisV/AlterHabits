@@ -66,37 +66,37 @@ public class ValidatorMethods {
             }
         }
     }
-
-    // check if user's date of birth format is ok
-    boolean checkIfDateOfBirthFormatIsValid(UserDto userDto, Errors errors) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false);
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            try {
-                sdf.parse(registerUserDto.getDateOfBirth());
-                return true;
-            } catch (ParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-                return false;
-            }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            try {
-                sdf.parse(updateUserDto.getDateOfBirth());
-                return true;
-            } catch (ParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-                return false;
-            }
-        }
-        return false;
-    }
+//
+//    // check if user's date of birth format is ok
+//    boolean checkIfDateOfBirthFormatIsValid(UserDto userDto, Errors errors) {
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+////        sdf.setLenient(false);
+//        if (userDto instanceof RegisterUserDto) {
+//            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+//            try {
+//                dtf.parse(registerUserDto.getDateOfBirth());
+//                return true;
+//            } catch (Exception e) {
+//                errors.rejectValue("dateOfBirth", "date.wrong");
+//                return false;
+//            }
+//        }
+//        if (userDto instanceof UpdateUserDto) {
+//            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
+//            try {
+//                dtf.parse(updateUserDto.getDateOfBirth());
+//                return true;
+//            } catch (Exception e) {
+//                errors.rejectValue("dateOfBirth", "date.wrong");
+//                return false;
+//            }
+//        }
+//        return false;
+//    }
 
     // check if user is adult (user's age>=18)
     void checkIfUserAdult(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {
             RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
             try {
@@ -124,7 +124,7 @@ public class ValidatorMethods {
 
     // check if date given is extremely big
     void checkIfUserAlive(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {
             RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
             try {

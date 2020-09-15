@@ -57,15 +57,15 @@ public   class BookingUtils {
     public int showInitialAppointments(MyUser user){
        String role=user.getRoleId().getRole();
        int appointments;
-       if (role.equals("ELIT")){
-           appointments=12;}
-       else if(role.equals("PREMIOUM")){
-           appointments=8;}
-       else if (role.equals("USER")){
-           appointments=4;}
-       else {
-           appointments=0;}
-           
+       if (role.equals("ROLE_ELIT")){
+           appointments=12;
+       } else if(role.equals("ROLE_PREMIUM")) {
+           appointments=8;
+       } else if (role.equals("ROLE_USER")) {
+           appointments=4;
+       } else {
+           appointments=0;
+       }   
       return appointments;  
     }
 }

@@ -64,7 +64,7 @@ public class RegisterUserDto implements UserDto{
     @NotEmpty(message = "This field is mandatory!")
     private String matchingPassword;
     
-    @NotNull(message = "Choose a subscription!")
+    @NotEmpty(message = "Choose a subscription!")
     private String role;
     
     @NotEmpty(message = "Please enter your credit/debit card's number!")

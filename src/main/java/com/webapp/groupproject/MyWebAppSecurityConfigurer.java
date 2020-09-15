@@ -74,10 +74,9 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/shops").permitAll()
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/quiz/**").permitAll()
+                .antMatchers("/register/submit").permitAll()
                 .antMatchers("/show").permitAll()
                 .antMatchers("/insertPartner").permitAll()
-                .antMatchers("/insertPartner2").permitAll()
-                .antMatchers("/showListOfTheWeekReservationsOfTheUser").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

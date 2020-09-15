@@ -29,6 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -71,6 +72,13 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "latitude")
     private String latitude;
+    @NotNull
+    @Email
+    @Column(name = "email")
+    private String email;
+    @NotNull
+    @Column(name="potential_partner")
+    private String potentialPartner;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -110,6 +118,23 @@ public class Shop implements Serializable {
         this.activities = activities;
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public Shop(String shopName, List<Activity> activities, String longitude, String latitude, String email,String potentialPartner) {
+        this.shopName = shopName;
+        this.activities = activities;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.email = email;
+        this.potentialPartner=potentialPartner;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Integer getShopId() {

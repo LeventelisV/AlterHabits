@@ -64,40 +64,7 @@ public class HelperMethods {
         return date;
 
     }
-
-    public static MultipartFile convertBase64ToMultipart(String encodedString) {
-
-        byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
-        String stringBase64Decoded = new String(byteBase64Decoded);
-
-        return BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
-
-    }
-
-    public static String manipulateDateString(String requestString) {
-        String[] parts = requestString.split("GMT ", 2);
-        String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556-42
-        return (part1 + "GMT+" + part2);
-
-    }
-
-    public static void multipartFileToFile(
-            MultipartFile multipart,
-            String dir
-    ) throws IOException {
-        Path filepath = Paths.get(dir, multipart.getOriginalFilename());
-        multipart.transferTo(filepath);
-    }
     
-    
-    public static void write(MultipartFile file, String dir) throws IOException {
-    Path filepath = Paths.get(dir, file.getOriginalFilename());
-    try (OutputStream os = Files.newOutputStream(filepath)) {
-        os.write(file.getBytes());
-    }
-}
-
 //    public static MultipartFile  decodeABase64String(String base64){
 //        try {
 //            String[] baseStrs = base64.split(",");
@@ -118,19 +85,22 @@ public class HelperMethods {
 //            return null;
 //        }
 //    }
-    
-    public static void  decodeABase64String(String base64) throws IOException{
-        
-        BufferedImage image = null;
-        byte[] decodedBytes = Base64.getMimeDecoder().decode( (base64 ).split(",")[1]);
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(decodedBytes);
-        image = ImageIO.read(bis);
-        bis.close();
+    public static MultipartFile convertBase64ToMultipart(String encodedString) {
 
-        File outputfile = new File(("C:\\Users\\vaggelis\\dskjdksajdk.jpg"));
+        byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
+        String stringBase64Decoded = new String(byteBase64Decoded);
 
-        ImageIO.write(image, "jpg", outputfile);
+        return BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+
+    }
+
+    public static String manipulateDateString(String requestString) {
+        String[] parts = requestString.split("GMT ", 2);
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556-42
+        return (part1 + "GMT+" + part2);
+
 
         
         

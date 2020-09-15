@@ -86,15 +86,17 @@ public class BecomingPartnerController {
 //        return " ";
 //    }
     @PostMapping("/insertPartner")
-    public void potentialPartner(@RequestBody PartnerDto partner) throws IOException {
+    public String potentialPartner(@RequestBody PartnerDto partner) throws IOException {
         List<String> stringList = partner.getShopActivities();
         List<Activity> activities = new ArrayList();
+        String result;
         for (String s : stringList) {
+            if(activityServiceInterface.findIfAnActivityExists(s)){
             Activity a = activityServiceInterface.findActivityByName(s);
             activities.add(a);
-
+            }
         }
-
+        if(shopServiceInterface.findIfAShopNameDoesNotExists(partner.getShopName())){
         Shop shop = new Shop(partner.getShopName(),
                 activities,
                 partner.getShopLongitude(),
@@ -111,6 +113,12 @@ public class BecomingPartnerController {
                 + shop.getShopId() + ".jpg");
         out.write(byteBase64Decoded);
         out.close();
+        result="success";
+        
     }
-
+        else{ result= "denied";} 
+        
+         return result;
+    }
+   
 }

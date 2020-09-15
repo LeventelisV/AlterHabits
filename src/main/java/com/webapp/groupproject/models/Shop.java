@@ -55,12 +55,6 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "shop_name", unique = true)
     private String shopName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "SHOP_PHOTO", unique = true)
-    @Transient
-    private String shopPhoto;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
     @JsonBackReference
     private Collection<Reservation> reservationCollection;
@@ -180,18 +174,10 @@ public class Shop implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "com.webapp.groupproject.models.Shops[ shopId=" + shopId + " ]";
-    }
-
-    public String getShopPhoto() {
-        return shopPhoto;
-    }
-
-    public void setShopPhoto(String shopPhoto) {
-        this.shopPhoto = shopPhoto;
     }
 
     @XmlTransient
@@ -218,5 +204,12 @@ public class Shop implements Serializable {
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
-
+    
+    public String getPotentialPartner () {
+        return this.potentialPartner;
+    }
+    
+    public void setPotentialPartner(String potentialPartner) {
+        this.potentialPartner = potentialPartner;
+    }
 }

@@ -99,21 +99,4 @@ public class PersistenceUtils {
         userUpdates.setMobileNumber(userUpdates.getMobileNumber());
 
     }
-
-    public static List<ShopDto> fillShopDto(List<Shop> shops) {
-        List<ShopDto> shopsDto = new ArrayList();
-
-        for (Shop shop : shops) {
-            ShopDto shopDto = new ShopDto();
-            shopDto.setShopId(shop.getShopId());
-            shopDto.setShopName(shop.getShopName());
-            shopDto.setShopPhoto(shop.getShopPhoto());
-            shopDto.setLongitude(shop.getLongitude());
-            shopDto.setLatitude(shop.getLatitude());
-            
-            shopsDto.add(shopDto);
-            
-        }
-        return shopsDto;
-    }
 }

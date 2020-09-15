@@ -6,6 +6,7 @@
 package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.models.Activity;
+import com.webapp.groupproject.models.DeserializeActivityDto;
 import com.webapp.groupproject.models.ImageDto;
 import com.webapp.groupproject.models.PartnerDto;
 import com.webapp.groupproject.models.Shop;
@@ -87,17 +88,17 @@ public class BecomingPartnerController {
 //    }
     @PostMapping("/insertPartner")
     public String potentialPartner(@RequestBody PartnerDto partner) throws IOException {
-        List<String> stringList = partner.getShopActivities();
+        List<DeserializeActivityDto> stringList = partner.getShopActivities();
         List<Activity> activities = new ArrayList();
         String result;
-        for (String s : stringList) {
-            if(activityServiceInterface.findIfAnActivityExists(s)){
-            Activity a = activityServiceInterface.findActivityByName(s);
+        for (DeserializeActivityDto s : stringList) {
+            if(activityServiceInterface.findIfAnActivityExists(s.getValue())){
+            Activity a = activityServiceInterface.findActivityByName(s.getValue());
             activities.add(a);
             }
         }
         if(shopServiceInterface.findIfAShopNameDoesNotExists(partner.getShopName())){
-        Shop shop = new Shop(partner.getShopName(),
+        Shop shop = new Shop(partner.getShopName().toUpperCase(),
                 activities,
                 partner.getShopLongitude(),
                 partner.getShopLatitude(),

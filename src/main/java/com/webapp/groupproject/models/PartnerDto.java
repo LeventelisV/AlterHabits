@@ -18,11 +18,11 @@ public class PartnerDto {
      private String shopLatitude;
      private String shopLongitude;
      private String shopImage;
-     private List<String> shopActivities;
+     private List<DeserializeActivityDto> shopActivities;
      
      public PartnerDto(){}
 
-    public PartnerDto(String shopName, String shopEmail, String shopLatitude, String shopLongitude, String shopImage, List<String> shopActivities) {
+    public PartnerDto(String shopName, String shopEmail, String shopLatitude, String shopLongitude, String shopImage, List<DeserializeActivityDto> shopActivities) {
         this.shopName = shopName;
         this.shopEmail = shopEmail;
         this.shopLatitude = shopLatitude;
@@ -71,11 +71,11 @@ public class PartnerDto {
         this.shopImage = shopImage;
     }
 
-    public List<String> getShopActivities() {
+    public List<DeserializeActivityDto> getShopActivities() {
         return shopActivities;
     }
 
-    public void setShopActivities(List<String> shopActivities) {
+    public void setShopActivities(List<DeserializeActivityDto> shopActivities) {
         this.shopActivities = shopActivities;
     }
 

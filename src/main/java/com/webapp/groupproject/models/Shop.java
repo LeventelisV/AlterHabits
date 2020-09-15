@@ -55,9 +55,7 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "shop_name", unique = true)
     private String shopName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
     @JsonBackReference
     private Collection<Reservation> reservationCollection;

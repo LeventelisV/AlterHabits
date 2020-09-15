@@ -113,7 +113,7 @@ public class UpdateUserController {
         String currentUsersUsername = authentication.getName();
         File oldPhoto = new File("E:\\Downloads\\UsersPhotos\\" + currentUsersUsername + ".jpg");
         oldPhoto.delete();
-        usersImageDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\" + currentUsersUsername + ".jpg"));
+//        usersImageDto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\" + currentUsersUsername + ".jpg"));
         return "redirect:photo";
     }
 }

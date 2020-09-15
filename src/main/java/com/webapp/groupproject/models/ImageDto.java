@@ -15,22 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class ImageDto {
     
-    @ImageFileConstraint
-    @ImageSizeConstraint
-    private MultipartFile userPhoto;
+    private String userPhoto;
 
     public ImageDto() {
     }
 
-    public ImageDto(MultipartFile userPhoto) {
+    public ImageDto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
 
-    public MultipartFile getUserPhoto() {
+    public String getUserPhoto() {
         return userPhoto;
     }
 
-    public void setUserPhoto(MultipartFile userPhoto) {
+    public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
     

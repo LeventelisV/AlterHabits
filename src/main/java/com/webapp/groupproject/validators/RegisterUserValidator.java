@@ -36,13 +36,13 @@ public class RegisterUserValidator implements Validator {
         UserDto registerUserDto = (UserDto) o;
         ValidatorMethods validatorMethods = new ValidatorMethods();
         validatorMethods.checkIfGenderIsChosen(registerUserDto, errors);
-        boolean dateFormatValid = validatorMethods.checkIfDateOfBirthFormatIsValid(registerUserDto, errors);
+//        boolean dateFormatValid = validatorMethods.checkIfDateOfBirthFormatIsValid(registerUserDto, errors);
         
         // filter for not running other validations if date format isn't valid
-        if (dateFormatValid) {
-            validatorMethods.checkIfUserAdult(registerUserDto, errors);
-            validatorMethods.checkIfUserAlive(registerUserDto, errors);
-        }
+//        if (dateFormatValid) {
+//            validatorMethods.checkIfUserAdult(registerUserDto, errors);
+//            validatorMethods.checkIfUserAlive(registerUserDto, errors);
+//        }
         validatorMethods.checkIfUsernameUnique(registerUserDto, errors);
         validatorMethods.checkIfPasswordsMatch(registerUserDto, errors);
         validatorMethods.checkIfEmailUnique(registerUserDto, errors);

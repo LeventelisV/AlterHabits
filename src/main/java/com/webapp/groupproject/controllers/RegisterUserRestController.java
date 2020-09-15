@@ -47,7 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author alexk
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/register")
 public class RegisterUserRestController {
     
     
@@ -86,7 +86,7 @@ public class RegisterUserRestController {
         binder.addValidators(registerUserValidator);
     }
 
-    @PostMapping(value = "register")
+    @PostMapping(value = "/submit")
     public String registerUserToDatabase(@Valid @RequestBody RegisterUserDto registerUserDto) {
         
         registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
@@ -182,7 +182,7 @@ public class RegisterUserRestController {
     public String registerUsersImageToDisk(@Valid @RequestBody ImageDto userPhoto) throws IOException{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
-        userPhoto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+currentUsersUsername+".jpg"));
+//        userPhoto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+currentUsersUsername+".jpg"));
         return "done";
     }
     

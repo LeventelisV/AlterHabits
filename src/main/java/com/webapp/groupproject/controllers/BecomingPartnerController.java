@@ -6,6 +6,7 @@
 package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.models.Activity;
+import com.webapp.groupproject.models.DeserializeActivityDto;
 import com.webapp.groupproject.models.ImageDto;
 import com.webapp.groupproject.models.PartnerDto;
 import com.webapp.groupproject.models.Shop;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +52,10 @@ public class BecomingPartnerController {
 
     @Autowired
     FileHandlingServiceInterface fileHandlingServiceInterface;
+    
+    @Autowired
+    private HttpServletRequest request;
+
 
     public String verifyFuturePartner(@RequestParam String shopName,
             @RequestParam String activity,
@@ -87,17 +93,17 @@ public class BecomingPartnerController {
 //    }
     @PostMapping("/insertPartner")
     public String potentialPartner(@RequestBody PartnerDto partner) throws IOException {
-        List<String> stringList = partner.getShopActivities();
+        List<DeserializeActivityDto> stringList = partner.getShopActivities();
         List<Activity> activities = new ArrayList();
         String result;
-        for (String s : stringList) {
-            if(activityServiceInterface.findIfAnActivityExists(s)){
-            Activity a = activityServiceInterface.findActivityByName(s);
+        for (DeserializeActivityDto s : stringList) {
+            if(activityServiceInterface.findIfAnActivityExists(s.getValue())){
+            Activity a = activityServiceInterface.findActivityByName(s.getValue());
             activities.add(a);
             }
         }
         if(shopServiceInterface.findIfAShopNameDoesNotExists(partner.getShopName())){
-        Shop shop = new Shop(partner.getShopName(),
+        Shop shop = new Shop(partner.getShopName().toUpperCase(),
                 activities,
                 partner.getShopLongitude(),
                 partner.getShopLatitude(),
@@ -109,9 +115,10 @@ public class BecomingPartnerController {
         byte[] byteBase64Decoded = Base64.getDecoder().decode(partner.getShopImage());
         String stringBase64Decoded = new String(byteBase64Decoded);
 //
-        OutputStream out = new FileOutputStream("C:\\Users\\vaggelis\\Documents\\NetBeansProjects\\AlterHabits\\src\\main\\resources\\static\\img"
-                + shop.getShopId() + ".jpg");
+        String saveDirectory=request.getSession().getServletContext().getRealPath("/")+"img\\"+ + shop.getShopId();
+        OutputStream out = new FileOutputStream(saveDirectory+".jpg");
         out.write(byteBase64Decoded);
+        out.flush();
         out.close();
         result="success";
         

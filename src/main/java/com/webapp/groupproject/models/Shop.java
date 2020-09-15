@@ -71,8 +71,11 @@ public class Shop implements Serializable {
     @Column(name = "email")
     private String email;
     @NotNull
-    @Column(name="potential_partner")
+    @Column(name = "potential_partner")
     private String potentialPartner;
+
+   
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -114,13 +117,13 @@ public class Shop implements Serializable {
         this.latitude = latitude;
     }
 
-    public Shop(String shopName, List<Activity> activities, String longitude, String latitude, String email,String potentialPartner) {
+    public Shop(String shopName, List<Activity> activities, String longitude, String latitude, String email, String potentialPartner) {
         this.shopName = shopName;
         this.activities = activities;
         this.longitude = longitude;
         this.latitude = latitude;
         this.email = email;
-        this.potentialPartner=potentialPartner;
+        this.potentialPartner = potentialPartner;
     }
 
     public void setEmail(String email) {
@@ -150,6 +153,15 @@ public class Shop implements Serializable {
     public List<Activity> getActivities() {
         return activities;
     }
+     public String getPotentialPartner() {
+        return potentialPartner;
+    }
+
+    public void setPotentialPartner(String potentialPartner) {
+        this.potentialPartner = potentialPartner;
+    }
+     
+     
 
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
@@ -203,13 +215,5 @@ public class Shop implements Serializable {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
-    }
-    
-    public String getPotentialPartner () {
-        return this.potentialPartner;
-    }
-    
-    public void setPotentialPartner(String potentialPartner) {
-        this.potentialPartner = potentialPartner;
     }
 }

@@ -12,7 +12,11 @@ import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +30,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+ 
+
 
 /**
  *
@@ -94,6 +103,22 @@ public class HelperMethods {
 
     }
 
+    public static void multipartFileToFile(
+            MultipartFile multipart,
+            String dir
+    ) throws IOException {
+        Path filepath = Paths.get(dir, multipart.getOriginalFilename());
+        multipart.transferTo(filepath);
+    }
+    
+    
+    public static void write(MultipartFile file, String dir) throws IOException {
+    Path filepath = Paths.get(dir, file.getOriginalFilename());
+    try (OutputStream os = Files.newOutputStream(filepath)) {
+        os.write(file.getBytes());
+    }
+}
+
 //    public static MultipartFile  decodeABase64String(String base64){
 //        try {
 //            String[] baseStrs = base64.split(",");
@@ -114,4 +139,21 @@ public class HelperMethods {
 //            return null;
 //        }
 //    }
+    
+    public static void  decodeABase64String(String base64) throws IOException{
+        
+        BufferedImage image = null;
+        byte[] decodedBytes = Base64.getMimeDecoder().decode( (base64 ).split(",")[1]);
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(decodedBytes);
+        image = ImageIO.read(bis);
+        bis.close();
+
+        File outputfile = new File(("C:\\Users\\vaggelis\\dskjdksajdk.jpg"));
+
+        ImageIO.write(image, "jpg", outputfile);
+
+        
+        
+    }
 }

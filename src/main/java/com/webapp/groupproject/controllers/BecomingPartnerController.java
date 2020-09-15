@@ -9,8 +9,10 @@ import com.webapp.groupproject.models.Activity;
 import com.webapp.groupproject.models.ImageDto;
 import com.webapp.groupproject.models.Shop;
 import com.webapp.groupproject.services.ActivityServiceInterface;
+import com.webapp.groupproject.services.FileHandlingServiceInterface;
 import com.webapp.groupproject.services.ShopServiceInterface;
 import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
+import com.webapp.groupproject.utils.HelperMethods;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -44,6 +46,9 @@ public class BecomingPartnerController {
     @Autowired
     ShopServiceInterface shopServiceInterface;
 
+    @Autowired
+    FileHandlingServiceInterface fileHandlingServiceInterface;
+
     public String verifyFuturePartner(@RequestParam String shopName,
             @RequestParam String activity,
             @RequestParam String longitude,
@@ -58,17 +63,25 @@ public class BecomingPartnerController {
 
     @GetMapping("/insertPartner")
     public String insertNewPartner(@RequestParam String shopName,
-            @RequestParam List<String> activities,
+            @RequestParam List<String> stringActivities,
             @RequestParam String longitude,
             @RequestParam String shopPhoto,
             @RequestParam String latitude) {
-        List<Activity> act = new ArrayList();
-        for (String s : activities) {
+        List<Activity> activities = new ArrayList();
+        for (String s : stringActivities) {
             Activity a = activityServiceInterface.findActivityByName(s);
+            activities.add(a);
+
         }
 
-        //  Shop shop=new Shop(shopName,activities,longitude,latitude)
-        return "";
+        Shop shop = new Shop(shopName, activities, longitude, latitude);
+        Shop insertedShop = shopServiceInterface.insertShop(shop);
+        byte[] byteBase64Decoded = Base64.getDecoder().decode(shopPhoto);
+        String stringBase64Decoded = new String(byteBase64Decoded);
+        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
+        fileHandlingServiceInterface.storeFileToDisk(f, insertedShop.getShopId() + ".jpg");
+//  Shop shop=new Shop(shopName,activities,longitude,latitude)
+        return " ";
     }
 
     @PostMapping("/insertPartner2")
@@ -83,5 +96,6 @@ public class BecomingPartnerController {
         out.write(byteBase64Decoded);
         out.close();
     }
+    
 
 }

@@ -74,15 +74,12 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/shops").permitAll()
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/quiz/**").permitAll()
-                .antMatchers("/book").permitAll()
                 .antMatchers("/show").permitAll()
                 .antMatchers("/insertPartner").permitAll()
                 .antMatchers("/insertPartner2").permitAll()
-                .antMatchers("/showRemainingAppointments").permitAll()
-                .antMatchers("/showRemainingAppointments").permitAll()
                 .antMatchers("/showListOfTheWeekReservationsOfTheUser").permitAll()
                 .anyRequest().authenticated();
-        
+
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -91,7 +88,7 @@ public class MyWebAppSecurityConfigurer extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(myUserServiceInterface);
         auth.setPasswordEncoder(passwordEncoder());
-        
+
         return auth;
     }
 

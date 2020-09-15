@@ -16,6 +16,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -25,6 +27,8 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,23 +85,19 @@ public class BecomingPartnerController {
     }
 
     @GetMapping("/insertPartner2")
-    public void saveImage() throws IOException {
+    public void saveImage( ) throws IOException {
          String shop = "C:\\Users\\vaggelis\\Downloads\\comradery.jpg";
-        String newshop="C:\\Users\\vaggelis\\";
-        
-         byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
-        String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
-        byte[] byteBase64Decoded = Base64.getDecoder().decode(encodedString);
-        String stringBase64Decoded = new String(byteBase64Decoded);
-
-        
-        HelperMethods.decodeABase64String(stringBase64Decoded);
-//        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
-//       f.transferTo(new File("C:\\Users\\vaggelis\\dskjdksajdk.jpg"));
+//        String newshop="C:\\Users\\vaggelis";
 //        
-//        HelperMethods.write(f, newshop);
-        
+//         byte[] fileContent = FileUtils.readFileToByteArray(new File(shop));
+//        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+ //       System.out.println(image);
+        byte[] byteBase64Decoded = Base64.getDecoder().decode(shop);
+         String folder="\\Users\\vaggelis\\downloads\\"   ;
+         Path path=Paths.get(folder+"dfgh.jpg");
+         Files.write(path,byteBase64Decoded);
+    
+    
         
         
         

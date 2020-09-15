@@ -62,7 +62,7 @@ public class BookController {
     @Autowired
     UserAppointmentsServiceInterface userAppointmentsServiceInterface;
 
-    // @PreAuthorize("hasRole('USER') or hasRole('PREMIUM') or hasRole('ADMIN')")
+   @PreAuthorize("hasRole('USER') or hasRole('PREMIUM') or hasRole('ELIT')")
     @GetMapping("/book")
     public String bookAppointment(@RequestParam String shopId,
             @RequestParam String activityId,

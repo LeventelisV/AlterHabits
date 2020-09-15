@@ -58,9 +58,6 @@ public class Shop implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "SHOP_PHOTO", unique = true)
-    @Transient
-    private String shopPhoto;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
     @JsonBackReference
     private Collection<Reservation> reservationCollection;
@@ -77,8 +74,11 @@ public class Shop implements Serializable {
     @Column(name = "email")
     private String email;
     @NotNull
-    @Column(name="potential_partner")
+    @Column(name = "potential_partner")
     private String potentialPartner;
+
+   
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -120,13 +120,13 @@ public class Shop implements Serializable {
         this.latitude = latitude;
     }
 
-    public Shop(String shopName, List<Activity> activities, String longitude, String latitude, String email,String potentialPartner) {
+    public Shop(String shopName, List<Activity> activities, String longitude, String latitude, String email, String potentialPartner) {
         this.shopName = shopName;
         this.activities = activities;
         this.longitude = longitude;
         this.latitude = latitude;
         this.email = email;
-        this.potentialPartner=potentialPartner;
+        this.potentialPartner = potentialPartner;
     }
 
     public void setEmail(String email) {
@@ -156,6 +156,15 @@ public class Shop implements Serializable {
     public List<Activity> getActivities() {
         return activities;
     }
+     public String getPotentialPartner() {
+        return potentialPartner;
+    }
+
+    public void setPotentialPartner(String potentialPartner) {
+        this.potentialPartner = potentialPartner;
+    }
+     
+     
 
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
@@ -186,13 +195,7 @@ public class Shop implements Serializable {
         return "com.webapp.groupproject.models.Shops[ shopId=" + shopId + " ]";
     }
 
-    public String getShopPhoto() {
-        return shopPhoto;
-    }
-
-    public void setShopPhoto(String shopPhoto) {
-        this.shopPhoto = shopPhoto;
-    }
+   
 
     @XmlTransient
     public Collection<Reservation> getReservationCollection() {

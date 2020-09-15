@@ -42,13 +42,13 @@ public class ShowAvailableShopsController {
 
     }
 
-    @GetMapping("/shops/{id}")
-    public List<ShopDto> showAllShopsForASpecificActivity(@PathVariable int id) {
-        List<Shop> shops = new ArrayList();
-        Activity a=activityServiceInterface.findActivityById(id);
-        shops.addAll(a.getShops());
-        return PersistenceUtils.fillShopDto(shops);
-    }
+//    @GetMapping("/shops/{id}")
+//    public List<ShopDto> showAllShopsForASpecificActivity(@PathVariable int id) {
+//        List<Shop> shops = new ArrayList();
+//        Activity a=activityServiceInterface.findActivityById(id);
+//        shops.addAll(a.getShops());
+//        return PersistenceUtils.fillShopDto(shops);
+//    }
     
 
 }                

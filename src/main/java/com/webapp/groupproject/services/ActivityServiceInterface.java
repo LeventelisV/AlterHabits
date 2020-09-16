@@ -5,22 +5,18 @@
  */
 package com.webapp.groupproject.services;
 
- 
 import com.webapp.groupproject.models.Activity;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author vaggelis
  */
-
-
 public interface ActivityServiceInterface {
-    
+
     public Activity findActivityById(int id);
-    
+
     public boolean findIfAnActivityExists(String activityName);
-        
-    public Activity findActivityByName(String activityName); 
-    
+
+    public Activity findActivityByName(String activityName);
+
 }

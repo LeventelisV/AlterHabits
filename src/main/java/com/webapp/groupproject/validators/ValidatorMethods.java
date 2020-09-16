@@ -15,19 +15,12 @@ import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.services.UserContactInfoServiceInterface;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 /**
@@ -66,35 +59,7 @@ public class ValidatorMethods {
             }
         }
     }
-//
-//    // check if user's date of birth format is ok
-//    boolean checkIfDateOfBirthFormatIsValid(UserDto userDto, Errors errors) {
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-////        sdf.setLenient(false);
-//        if (userDto instanceof RegisterUserDto) {
-//            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-//            try {
-//                dtf.parse(registerUserDto.getDateOfBirth());
-//                return true;
-//            } catch (Exception e) {
-//                errors.rejectValue("dateOfBirth", "date.wrong");
-//                return false;
-//            }
-//        }
-//        if (userDto instanceof UpdateUserDto) {
-//            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-//            try {
-//                dtf.parse(updateUserDto.getDateOfBirth());
-//                return true;
-//            } catch (Exception e) {
-//                errors.rejectValue("dateOfBirth", "date.wrong");
-//                return false;
-//            }
-//        }
-//        return false;
-//    }
 
-    // check if user is adult (user's age>=18)
     void checkIfUserAdult(UserDto userDto, Errors errors) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {
@@ -122,7 +87,7 @@ public class ValidatorMethods {
 
     }
 
-    // check if date given is extremely big
+  
     void checkIfUserAlive(UserDto userDto, Errors errors) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if (userDto instanceof RegisterUserDto) {

@@ -42,7 +42,6 @@ public class UserContactInfo implements Serializable {
     @Basic(optional = false)
     @Column(name = "contact_info_id")
     private Integer contactInfoId;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -137,5 +136,5 @@ public class UserContactInfo implements Serializable {
     public String toString() {
         return "com.webapp.groupproject.models.UserContactInfo[ contactInfoId=" + contactInfoId + " ]";
     }
-    
+
 }

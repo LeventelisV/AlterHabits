@@ -6,7 +6,6 @@
 package com.webapp.groupproject.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -55,7 +53,6 @@ public class Shop implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "shop_name", unique = true)
     private String shopName;
-    
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "shopId")
     @JsonBackReference
     private Collection<Reservation> reservationCollection;
@@ -74,9 +71,6 @@ public class Shop implements Serializable {
     @NotNull
     @Column(name = "potential_partner")
     private String potentialPartner;
-
-   
-    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -154,15 +148,14 @@ public class Shop implements Serializable {
     public List<Activity> getActivities() {
         return activities;
     }
-     public String getPotentialPartner() {
+
+    public String getPotentialPartner() {
         return potentialPartner;
     }
 
     public void setPotentialPartner(String potentialPartner) {
         this.potentialPartner = potentialPartner;
     }
-     
-     
 
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
@@ -192,8 +185,6 @@ public class Shop implements Serializable {
     public String toString() {
         return "com.webapp.groupproject.models.Shops[ shopId=" + shopId + " ]";
     }
-
-   
 
     @XmlTransient
     public Collection<Reservation> getReservationCollection() {

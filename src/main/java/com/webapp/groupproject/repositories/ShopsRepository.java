@@ -18,9 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface ShopsRepository extends JpaRepository<Shop, Integer>{
      
     
-//    @Query(value="SELECT distinct shop_id,shop_name FROM SHOPS",nativeQuery=true)
-//    public List<Shop> showAllShops();
-        
+
     
   
   public Shop findShopByShopName(String shopName);

@@ -8,13 +8,9 @@ package com.webapp.groupproject.utils;
 import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
-import com.webapp.groupproject.models.Shop;
-import com.webapp.groupproject.models.ShopDto;
 import com.webapp.groupproject.models.UpdateUserDto;
 import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.models.UserPersonalInfo;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -99,21 +95,4 @@ public class PersistenceUtils {
         userUpdates.setMobileNumber(userUpdates.getMobileNumber());
 
     }
-
-//    public static List<ShopDto> fillShopDto(List<Shop> shops) {
-//        List<ShopDto> shopsDto = new ArrayList();
-//
-//        for (Shop shop : shops) {
-//            ShopDto shopDto = new ShopDto();
-//            shopDto.setShopId(shop.getShopId());
-//            shopDto.setShopName(shop.getShopName());
-//            shopDto.setShopPhoto(shop.getShopPhoto());
-//            shopDto.setLongitude(shop.getLongitude());
-//            shopDto.setLatitude(shop.getLatitude());
-//            
-//            shopsDto.add(shopDto);
-//            
-//        }
-//        return shopsDto;
-//    }
 }

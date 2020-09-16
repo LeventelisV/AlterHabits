@@ -40,13 +40,6 @@ public class UpdateUserValidator implements Validator {
         UserDto updateUserDto = (UserDto) o;
         ValidatorMethods validatorMethods = new ValidatorMethods();
         validatorMethods.checkIfGenderIsChosen(updateUserDto, errors);
-//        boolean dateFormatValid = validatorMethods.checkIfDateOfBirthFormatIsValid(updateUserDto, errors);
-        
-        // filter for not running other validations if date format isn't valid
-//        if (dateFormatValid) {
-//            validatorMethods.checkIfUserAdult(updateUserDto, errors);
-//            validatorMethods.checkIfUserAlive(updateUserDto, errors);
-//        }
         validatorMethods.checkIfEmailUnique(updateUserDto, errors);
         validatorMethods.checkIfMobileNumberUnique(updateUserDto, errors);
 

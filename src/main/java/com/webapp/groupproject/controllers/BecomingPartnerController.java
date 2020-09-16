@@ -7,34 +7,21 @@ package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.models.Activity;
 import com.webapp.groupproject.models.DeserializeActivityDto;
-import com.webapp.groupproject.models.ImageDto;
 import com.webapp.groupproject.models.PartnerDto;
 import com.webapp.groupproject.models.Shop;
 import com.webapp.groupproject.services.ActivityServiceInterface;
-import com.webapp.groupproject.services.FileHandlingServiceInterface;
 import com.webapp.groupproject.services.ShopServiceInterface;
-import com.webapp.groupproject.utils.BASE64DecodedMultipartFile;
-import com.webapp.groupproject.utils.HelperMethods;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import javax.imageio.ImageIO;
-import org.apache.commons.io.FileUtils;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  *
@@ -49,43 +36,15 @@ public class BecomingPartnerController {
     @Autowired
     ShopServiceInterface shopServiceInterface;
 
+   
+    
     @Autowired
-    FileHandlingServiceInterface fileHandlingServiceInterface;
+    private HttpServletRequest request;
 
-    public String verifyFuturePartner(@RequestParam String shopName,
-            @RequestParam String activity,
-            @RequestParam String longitude,
-            @RequestParam String shopPhoto,
-            @RequestParam String latitude) {
-        if ((activityServiceInterface.findIfAnActivityExists(activity)) && (shopServiceInterface.findIfAShopNameDoesNotExists(shopName))) {
-            return "forward:insertPartner";
-        } else {
-            return "invalid name or wrong activity";
-        }
-    }
 
-//    @GetMapping("/insertPartner")
-//    public String insertNewPartner(@RequestParam String shopName,
-//            @RequestParam List<String> stringActivities,
-//            @RequestParam String longitude,
-//            @RequestParam String shopPhoto,
-//            @RequestParam String latitude) {
-//        List<Activity> activities = new ArrayList();
-//        for (String s : stringActivities) {
-//            Activity a = activityServiceInterface.findActivityByName(s);
-//            activities.add(a);
-//
-//        }
-//
-//        Shop shop = new Shop(shopName, activities, longitude, latitude);
-//        Shop insertedShop = shopServiceInterface.insertShop(shop);
-//        byte[] byteBase64Decoded = Base64.getDecoder().decode(shopPhoto);
-//        String stringBase64Decoded = new String(byteBase64Decoded);
-//        MultipartFile f = BASE64DecodedMultipartFile.base64ToMultipart(stringBase64Decoded);
-//        fileHandlingServiceInterface.storeFileToDisk(f, insertedShop.getShopId() + ".jpg");
-//  Shop shop=new Shop(shopName,activities,longitude,latitude)
-//        return " ";
-//    }
+
+
+
     @PostMapping("/insertPartner")
     public String potentialPartner(@RequestBody PartnerDto partner) throws IOException {
         List<DeserializeActivityDto> stringList = partner.getShopActivities();
@@ -110,9 +69,10 @@ public class BecomingPartnerController {
         byte[] byteBase64Decoded = Base64.getDecoder().decode(partner.getShopImage());
         String stringBase64Decoded = new String(byteBase64Decoded);
 //
-        OutputStream out = new FileOutputStream("C:\\Users\\vaggelis\\Documents\\NetBeansProjects\\AlterHabits\\src\\main\\resources\\static\\img"
-                + shop.getShopId() + ".jpg");
+        String saveDirectory=request.getSession().getServletContext().getRealPath("/")+"img\\"+ + shop.getShopId();
+        OutputStream out = new FileOutputStream(saveDirectory+".jpg");
         out.write(byteBase64Decoded);
+        out.flush();
         out.close();
         result="success";
         

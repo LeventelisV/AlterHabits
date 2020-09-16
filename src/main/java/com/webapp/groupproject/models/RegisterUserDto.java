@@ -9,16 +9,13 @@ package com.webapp.groupproject.models;
  *
  * @author vaggelis
  */
-import com.webapp.groupproject.annotations.ImageFileConstraint;
-import com.webapp.groupproject.annotations.ImageSizeConstraint;
+ 
 import com.webapp.groupproject.interfaces.UserDto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *

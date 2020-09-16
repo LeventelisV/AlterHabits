@@ -20,8 +20,8 @@ import org.springframework.validation.Validator;
 @Component
 public class RegisterUserValidator implements Validator {
 
-   @Autowired
-   CreditDebitCardServiceInterface creditDebitCardServiceInterface;
+    @Autowired
+    CreditDebitCardServiceInterface creditDebitCardServiceInterface;
 
     @Override
     public boolean supports(Class<?> type) {
@@ -32,27 +32,17 @@ public class RegisterUserValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        
+
         UserDto registerUserDto = (UserDto) o;
         ValidatorMethods validatorMethods = new ValidatorMethods();
         validatorMethods.checkIfGenderIsChosen(registerUserDto, errors);
-//        boolean dateFormatValid = validatorMethods.checkIfDateOfBirthFormatIsValid(registerUserDto, errors);
-        
-        // filter for not running other validations if date format isn't valid
-//        if (dateFormatValid) {
-//            validatorMethods.checkIfUserAdult(registerUserDto, errors);
-//            validatorMethods.checkIfUserAlive(registerUserDto, errors);
-//        }
         validatorMethods.checkIfUsernameUnique(registerUserDto, errors);
         validatorMethods.checkIfPasswordsMatch(registerUserDto, errors);
         validatorMethods.checkIfEmailUnique(registerUserDto, errors);
-      //  validatorMethods.checkIfUserInsertedPhoto(registerUserDto, errors);
         validatorMethods.checkIfMobileNumberUnique(registerUserDto, errors);
-        if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(((RegisterUserDto) registerUserDto).getCreditDebitCardNumber())) {
+        if (creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(((RegisterUserDto) registerUserDto).getCreditDebitCardNumber())) {
             validatorMethods.checkIfCreditDebitCardCredentialsValid(registerUserDto, errors);
         }
     }
-
-    
 
 }

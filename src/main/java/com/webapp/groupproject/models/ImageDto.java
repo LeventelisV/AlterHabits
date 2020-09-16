@@ -5,10 +5,6 @@
  */
 package com.webapp.groupproject.models;
 
-import com.webapp.groupproject.annotations.ImageFileConstraint;
-import com.webapp.groupproject.annotations.ImageSizeConstraint;
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  *
  * @author alexk

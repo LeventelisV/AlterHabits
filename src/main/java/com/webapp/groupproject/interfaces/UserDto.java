@@ -5,8 +5,6 @@
  */
 package com.webapp.groupproject.interfaces;
 
-import org.springframework.stereotype.Component;
-
 /**
  *
  * @author alexk

@@ -5,19 +5,12 @@
  */
 package com.webapp.groupproject.controllers;
 
-import com.webapp.groupproject.models.Activity;
 import com.webapp.groupproject.models.Shop;
-import com.webapp.groupproject.models.ShopDto;
-
 import com.webapp.groupproject.services.ActivityServiceInterface;
 import com.webapp.groupproject.services.ShopServiceInterface;
-
-import com.webapp.groupproject.utils.PersistenceUtils;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,23 +25,12 @@ public class ShowAvailableShopsController {
 
     @Autowired
     ActivityServiceInterface activityServiceInterface;
-    
-  
 
-    @GetMapping("/shops") 
+    @GetMapping("/shops")
     public List<Shop> showAllShops() {
         List<Shop> shops = shopServiceInterface.findShops();
         return shops;
 
     }
 
-//    @GetMapping("/shops/{id}")
-//    public List<ShopDto> showAllShopsForASpecificActivity(@PathVariable int id) {
-//        List<Shop> shops = new ArrayList();
-//        Activity a=activityServiceInterface.findActivityById(id);
-//        shops.addAll(a.getShops());
-//        return PersistenceUtils.fillShopDto(shops);
-//    }
-    
-
-}                
+}

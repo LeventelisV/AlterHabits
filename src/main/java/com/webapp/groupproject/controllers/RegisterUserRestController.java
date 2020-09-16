@@ -7,7 +7,7 @@ package com.webapp.groupproject.controllers;
 
 import com.webapp.groupproject.models.CreditDebitCard;
 import com.webapp.groupproject.models.ImageDto;
-import com.webapp.groupproject.models.Lala;
+//import com.webapp.groupproject.models.Lala;
 import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
 import com.webapp.groupproject.models.Role;
@@ -134,61 +134,16 @@ public class RegisterUserRestController {
 
     }
     
-//    @PostMapping(value = "register", consumes = {"multipart/form-data"})
-//    public String registerUserToDatabase(@Valid @RequestPart("properties") RegisterUserDto registerUserDto,
-//            @Valid @RequestPart("file") ImageDto usersPhoto) {
-//        
-//        registerUserDto.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
-//        MyUser myuser = PersistenceUtils.fillMyUserProperties(registerUserDto);
-//        
-//        //withdraw role by name from database and add it to user based on his subscription
-//        Role roleAssigned = roleServiceInterface.findByRoleName("ROLE_"+registerUserDto.getRole());
-//        myuser.setRoleId(roleAssigned);
-//        
-//        myUserServiceInterface.saveMyUser(myuser);
-//
-//        //take the userId from the database
-//        MyUser insertedUser = myUserServiceInterface.findByUsername(myuser.getUsername());
-//          
-//        CreditDebitCard insertedCreditDebitCard;
-//        
-//        if(creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(registerUserDto.getCreditDebitCardNumber())) {
-//            insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(registerUserDto.getCreditDebitCardNumber());
-//        }else{
-//         // insert new user's credit/debit card
-//            CreditDebitCard creditDebitCard = PersistenceUtils.fillCreditDebitCardInfo(registerUserDto);
-//            creditDebitCardServiceInterface.saveCreditDebitCard(creditDebitCard);
-//            insertedCreditDebitCard = creditDebitCardServiceInterface.findByCreditDebitCardNumber(creditDebitCard.getCreditDebitCardNumber());
-//        }
-//        
-//        // adding the relationship between user and credit/debit card
-//        insertedUser.getCreditDebitCardCollection().add(insertedCreditDebitCard);
-//        myUserServiceInterface.saveMyUser(insertedUser);
-//
-//        // insert data to user_contact_info_table
-//        UserContactInfo userContactInfo = PersistenceUtils.fillUserContactInfoProperties(registerUserDto, myuser);
-//        userContactServiseInterface.saveUserContactInfo(userContactInfo);
-//
-//        //insert data to user_personal _info table
-//        UserPersonalInfo userPersonalInfo = PersistenceUtils.fillUserPersonalInfoProperties(registerUserDto, myuser);
-//        userPersonalServiceInterface.saveUserPersonalInfo(userPersonalInfo);
-//        
-//        return "quiz";
-//
-//    }
+
     
     
     @PostMapping("registerimage")
     public String registerUsersImageToDisk(@Valid @RequestBody ImageDto userPhoto) throws IOException{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsersUsername = authentication.getName();
-//        userPhoto.getUserPhoto().transferTo(new File("E:\\Downloads\\UsersPhotos\\"+currentUsersUsername+".jpg"));
+
         return "done";
     }
     
-    @PostMapping(value = "registerlala")
-    public String registerLala(@RequestBody Lala rudto){
-        System.out.println(rudto);
-        return null;
-    }
+
 }

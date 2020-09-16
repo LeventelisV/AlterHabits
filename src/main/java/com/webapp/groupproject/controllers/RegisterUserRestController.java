@@ -133,17 +133,5 @@ public class RegisterUserRestController {
         return "registered";
 
     }
-    
-
-    
-    
-    @PostMapping("registerimage")
-    public String registerUsersImageToDisk(@Valid @RequestBody ImageDto userPhoto) throws IOException{
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsersUsername = authentication.getName();
-
-        return "done";
-    }
-    
 
 }

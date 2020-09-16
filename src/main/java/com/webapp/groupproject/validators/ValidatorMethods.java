@@ -6,21 +6,11 @@
 package com.webapp.groupproject.validators;
 
 import com.webapp.groupproject.SpringContext;
-import com.webapp.groupproject.interfaces.UserDto;
 import com.webapp.groupproject.models.CreditDebitCard;
-import com.webapp.groupproject.models.MyUser;
 import com.webapp.groupproject.models.RegisterUserDto;
-import com.webapp.groupproject.models.UpdateUserDto;
-import com.webapp.groupproject.models.UserContactInfo;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import com.webapp.groupproject.services.MyUserServiceInterface;
 import com.webapp.groupproject.services.UserContactInfoServiceInterface;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 
 /**
@@ -45,168 +35,41 @@ public class ValidatorMethods {
     }
 
     // check if user chose gender
-    void checkIfGenderIsChosen(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfGenderIsChosen(RegisterUserDto registerUserDto, Errors errors) {
             if (registerUserDto.getGender().equals("NONE")) {
                 errors.rejectValue("gender", "gender.not.selected");
             }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            if (updateUserDto.getGender().equals("NONE")) {
-                errors.rejectValue("gender", "gender.not.selected");
-            }
-        }
-    }
-
-    void checkIfUserAdult(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            try {
-                Period period = Period.between(LocalDate.parse(registerUserDto.getDateOfBirth(), dtf), LocalDate.now());
-                if (period.getYears() < 18) {
-                    errors.rejectValue("dateOfBirth", "date.under");
-                }
-            } catch (DateTimeParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-            }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            try {
-                Period period = Period.between(LocalDate.parse(updateUserDto.getDateOfBirth(), dtf), LocalDate.now());
-                if (period.getYears() < 18) {
-                    errors.rejectValue("dateOfBirth", "date.under");
-                }
-            } catch (DateTimeParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-            }
-        }
-
-    }
-
-  
-    void checkIfUserAlive(UserDto userDto, Errors errors) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
-            try {
-                Period period = Period.between(LocalDate.parse(registerUserDto.getDateOfBirth(), dtf), LocalDate.now());
-                if (period.getYears() > 100) {
-                    errors.rejectValue("dateOfBirth", "date.over");
-                }
-            } catch (DateTimeParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-            }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            try {
-                Period period = Period.between(LocalDate.parse(updateUserDto.getDateOfBirth(), dtf), LocalDate.now());
-                if (period.getYears() > 100) {
-                    errors.rejectValue("dateOfBirth", "date.over");
-                }
-            } catch (DateTimeParseException e) {
-                errors.rejectValue("dateOfBirth", "date.wrong");
-            }
-        }
     }
 
     // check if username is unique in database
-    void checkIfUsernameUnique(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfUsernameUnique(RegisterUserDto registerUserDto, Errors errors) {
             if (getMyUserService().findByUsername(registerUserDto.getUsername()) != null) {
                 errors.rejectValue("username", "username.not.unique");
             }
-        }
     }
 
     // check if passwords given match
-    void checkIfPasswordsMatch(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfPasswordsMatch(RegisterUserDto registerUserDto, Errors errors) {
             if (!registerUserDto.getPassword().equals(registerUserDto.getMatchingPassword())) {
                 errors.rejectValue("matchingPassword", "passwords.not.matching");
             }
-        }
     }
 
     // check if email already exists in database
-    void checkIfEmailUnique(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfEmailUnique(RegisterUserDto registerUserDto, Errors errors) {
             if (getUserContactInfoService().checkIfEmailExists(registerUserDto.getEmail())) {
                 errors.rejectValue("email", "email.not.unique");
             }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            if (getUserContactInfoService().checkIfEmailExists(updateUserDto.getEmail())) {
-                if(!checkIfUsedEmailBelongsToCurrentUser(updateUserDto)){
-                errors.rejectValue("email", "email.not.unique");
-                }
-            }
-        }
     }
     
-    void checkIfMobileNumberUnique(UserDto userDto, Errors errors) {
-        if (userDto instanceof RegisterUserDto) {
-            RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfMobileNumberUnique(RegisterUserDto registerUserDto, Errors errors) {
             if (getUserContactInfoService().checkIfMobileNumberExists(registerUserDto.getMobileNumber())) {
                 errors.rejectValue("mobileNumber", "mobile.number.not.unique");
             }
-        }
-        if (userDto instanceof UpdateUserDto) {
-            UpdateUserDto updateUserDto = (UpdateUserDto) userDto;
-            if (getUserContactInfoService().checkIfMobileNumberExists(updateUserDto.getMobileNumber())) {
-                if(!checkIfUsedPhoneNumberBelongsToCurrentUser(updateUserDto)){
-                errors.rejectValue("mobileNumber", "mobile.number.not.unique");
-                }
-            }
-        }
     }
 
-    /*
-    check if new email on update is the same with the old one,
-     and if so let it be,
-    if it isn't, reject value because already exists for another users contact info
-     */
-    private boolean checkIfUsedEmailBelongsToCurrentUser(UpdateUserDto updateUserDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsersUsername = authentication.getName();
-        MyUser currentUser = getMyUserService().findByUsername(currentUsersUsername);
-        UserContactInfo userContactInfo = getUserContactInfoService().findUserContactInfoByEmail(updateUserDto.getEmail());
-        MyUser userWhomEmailBelongsTo = getMyUserService().findById(userContactInfo.getUserId().getUserId());
-        
-        if(currentUser.getUserId().intValue() == userWhomEmailBelongsTo.getUserId().intValue()) {
-            return true;
-        }
-        return false;
-    }
     
-    /*
-    check if new mobile number on update is the same with the old one,
-     and if so let it be,
-    if it isn't, reject value because already exists for another users contact info
-     */
-    private boolean checkIfUsedPhoneNumberBelongsToCurrentUser(UpdateUserDto updateUserDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsersUsername = authentication.getName();
-        MyUser currentUser = getMyUserService().findByUsername(currentUsersUsername);
-        UserContactInfo userContactInfo = getUserContactInfoService().findUserContactInfoByMobileNumber(updateUserDto.getMobileNumber());
-        MyUser userWhomMobileNumberBelongsTo = getMyUserService().findById(userContactInfo.getUserId().getUserId());
-        
-        if(currentUser.getUserId().intValue() == userWhomMobileNumberBelongsTo.getUserId().intValue()) {
-            return true;
-        }
-        return false;
-    }
-    
-    void checkIfCreditDebitCardCredentialsValid(UserDto userDto, Errors errors) {
-        RegisterUserDto registerUserDto = (RegisterUserDto) userDto;
+    void checkIfCreditDebitCardCredentialsValid(RegisterUserDto registerUserDto, Errors errors) {
         CreditDebitCard registeredCard = getCardServiceInterface().findByCreditDebitCardNumber(registerUserDto.getCreditDebitCardNumber());
         if(registeredCard.getCreditDebitCardName().equals(registerUserDto.getCreditDebitCardName())
                 && registeredCard.getCreditDebitCardExpirationYear() == Integer.parseInt(registerUserDto.getCreditDebitCardExpYear())

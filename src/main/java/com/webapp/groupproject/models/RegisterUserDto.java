@@ -10,7 +10,6 @@ package com.webapp.groupproject.models;
  * @author vaggelis
  */
  
-import com.webapp.groupproject.interfaces.UserDto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -21,7 +20,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
  *
  * @author vaggelis
  */
-public class RegisterUserDto implements UserDto{
+public class RegisterUserDto {
 
     @NotEmpty(message = "Name can't be empty!")
     @Pattern(regexp = "^[A-Za-z]*$", message = "Invalid input for name. Name must contain only letters!")

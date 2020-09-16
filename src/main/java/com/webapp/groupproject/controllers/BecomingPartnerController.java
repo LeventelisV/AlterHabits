@@ -68,7 +68,6 @@ public class BecomingPartnerController {
 
         byte[] byteBase64Decoded = Base64.getDecoder().decode(partner.getShopImage());
         String stringBase64Decoded = new String(byteBase64Decoded);
-//
         String saveDirectory=request.getSession().getServletContext().getRealPath("/")+"img\\"+ + shop.getShopId();
         OutputStream out = new FileOutputStream(saveDirectory+".jpg");
         out.write(byteBase64Decoded);

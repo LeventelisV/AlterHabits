@@ -5,7 +5,6 @@
  */
 package com.webapp.groupproject.validators;
 
-import com.webapp.groupproject.interfaces.UserDto;
 import com.webapp.groupproject.models.RegisterUserDto;
 import com.webapp.groupproject.services.CreditDebitCardServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +32,14 @@ public class RegisterUserValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
 
-        UserDto registerUserDto = (UserDto) o;
+        RegisterUserDto registerUserDto = (RegisterUserDto) o;
         ValidatorMethods validatorMethods = new ValidatorMethods();
         validatorMethods.checkIfGenderIsChosen(registerUserDto, errors);
         validatorMethods.checkIfUsernameUnique(registerUserDto, errors);
         validatorMethods.checkIfPasswordsMatch(registerUserDto, errors);
         validatorMethods.checkIfEmailUnique(registerUserDto, errors);
         validatorMethods.checkIfMobileNumberUnique(registerUserDto, errors);
-        if (creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(((RegisterUserDto) registerUserDto).getCreditDebitCardNumber())) {
+        if (creditDebitCardServiceInterface.checkIfCreditDebitCardNumberExists(registerUserDto.getCreditDebitCardNumber())) {
             validatorMethods.checkIfCreditDebitCardCredentialsValid(registerUserDto, errors);
         }
     }
